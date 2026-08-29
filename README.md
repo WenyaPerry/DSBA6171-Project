@@ -52,13 +52,20 @@
 ---
 
 ## 5. Controlled Quality Issues & Risk Matrix Summary
+##Option 1
+| Quality Problem | Affected Layer | AI Impact | Business Consequence | Future Control |
+| :--- | :--- | :--- | :--- | :--- |
+| A duplicate credit-pull event is intentionally included for one applicant. | Ingestion  | The AI may use the same credit event twice or retrieve conflicting credit information. | Incorrect risk assessment | Primary-key validation and deduplication gate |
+| A superseded underwriting policy is incorrectly labeled as current. | Knowledge Corpus | Hallucination on superseded rules | Compliance failure | Authority filter |
+| One loan application contains a missing or invalid product_code. | Data quality / Relational join | The AI cannot connect the application to the correct loan product and eligibility rules. | Partial analytics | Foreign-key validation and schema contract |
+
+##Option 2
 | Quality Problem | Affected Layer | AI Impact | Business Consequence | Future Control |
 | :--- | :--- | :--- | :--- | :--- |
 | [Issue 1] | Ingestion / Vector Store | Incorrect context retrieve | Flawed decisioning | Deduplication gate |
 | [Issue 2] | Knowledge Corpus | Hallucination on superseded rules | Compliance failure | Authority filter |
 | [Issue 3] | Data Quality | Null keys during join | Partial analytics | Schema contract |
 
----
 
 ## 6. How to Run & Environment Setup
 1. Clone this repository to your local machine.
