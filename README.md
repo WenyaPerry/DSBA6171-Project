@@ -2,12 +2,12 @@
 
 ## 1. Team Information & Roles
 * **Team Number / Name:** [e.g., Team 01 - FinTech]
-* **Team Lead / Liaison:** [Student Name]
-* **Data & Ingestion Lead:** [Student Name]
-* **Database & Analytics Lead:** [Student Name]
-* **Knowledge & Retrieval Lead:** [Student Name]
-* **Quality & Governance Lead:** [Student Name]
-
+* **Team Lead / Liaison:** [Marie Vrablic]
+* **Data & Ingestion Lead:** [Aswani Karaturi]
+* **Database & Analytics Lead:** [Marie Vrablic]
+* **Knowledge & Retrieval Lead:** [Sofia Martinez]
+* **Quality & Governance Lead:** [Wenya Perry]
+* **Domain & Strategy Support:** [Bobby Deasy]
 ---
 
 ## 2. Business Context & Problem Framing
