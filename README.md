@@ -11,16 +11,24 @@
 ---
 
 ## 2. Business Context & Problem Framing
-* **Assigned Domain:** [FinTech: Credit & Loan Review | HealthTech: Medical Claims & Payer Auditing]
-* **Business Function / Process:** [e.g., Streamlining credit review & compliance audit]
-* **Target Stakeholders:** [e.g., Underwriting officers, Compliance auditors]
-* **Primary Decision Question:** [Insert primary decision question]
+* **Assigned Domain:** [FinTech: Credit & Loan Review ]
+* **Business Function / Process:** [Personal Loan Approval and Fair-Lending Review]
+* **Target Stakeholders:** [Loan underwriting officers, credit-risk managers, fair-lending compliance auditors, and internal audit teams]
+* **Primary Decision Question:** [Should a personal loan application be approved, denied, or escalated for manual review based on the applicant’s credit risk, the selected loan product, and the underwriting policies in effect on the application date?]
 * **Supporting Business Questions:**
-  1. [Supporting question 1]
-  2. [Supporting question 2]
-  3. [Supporting question 3]
+  1. [Does the applicant satisfy the applicable eligibility requirements, including minimum credit score, income, debt-to-income ratio, and requested-loan limits?]
+  2. [Was the lending decision applied consistently across applicants, without unexplained differences among protected demographic groups?]
+  3. [Can the decision be explained and supported by accurate application data, valid reason codes, and the correct version of the underwriting and fair-lending policies?]
 
----
+## Option 2. Business Context & Problem Framing
+* **Assigned Domain:** [FinTech: Credit & Loan Review ]
+* **Business Function / Process:** [Mortgage Application Underwriting and Fair-Lending Compliance Review]
+* **Target Stakeholders:** [Mortgage underwriting officers, credit-risk managers, appraisal reviewers, fair-lending compliance auditors, and internal audit teams]
+* **Primary Decision Question:** [Should a mortgage application be approved, denied, or escalated for manual review based on the applicant’s credit risk, the property appraisal, the selected mortgage product, and the policies in effect on the application date?]
+* **Supporting Business Questions:**
+  1. [Does the applicant satisfy the applicable underwriting requirements, including credit score, verified income, debt-to-income ratio, down payment, and loan-to-value limits?]
+  2. [Does the property appraisal—including its valuation, condition assessment, comparable-property analysis, tables, and photographs—provide sufficient collateral support for the requested mortgage?]
+  3. [Was the decision applied consistently across applicants, supported by valid reason codes and current policies, and free from unexplained differences among protected demographic groups?]
 
 ## 3. Microcosm Assets Overview
 
