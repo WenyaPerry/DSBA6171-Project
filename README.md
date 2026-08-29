@@ -59,12 +59,12 @@
 | A superseded underwriting policy is incorrectly labeled as current. | Knowledge Corpus | Hallucination on superseded rules | Compliance failure | Authority filter |
 | One loan application contains a missing or invalid product_code. | Data quality / Relational join | The AI cannot connect the application to the correct loan product and eligibility rules. | Partial analytics | Foreign-key validation and schema contract |
 
-##Option 2
+##Option 2 Mortgage
 | Quality Problem | Affected Layer | AI Impact | Business Consequence | Future Control |
 | :--- | :--- | :--- | :--- | :--- |
-| [Issue 1] | Ingestion / Vector Store | Incorrect context retrieve | Flawed decisioning | Deduplication gate |
-| [Issue 2] | Knowledge Corpus | Hallucination on superseded rules | Compliance failure | Authority filter |
-| [Issue 3] | Data Quality | Null keys during join | Partial analytics | Schema contract |
+| One appraisal photograph is intentionally assigned to the wrong property_id. | Ingestion / Vector Store | The AI may associate another property’s condition with the mortgage application under review. | Incorrect collateral assessment, valuation conclusion, or escalation decision | Document-image manifest, checksum validation, and property-ID verification |
+| A superseded underwriting policy is incorrectly labeled as current. | Knowledge Corpus | Hallucination on superseded rules | Compliance failure | Authority filter |
+| One appraisal record contains a missing or invalid appraisal_id or application_id. | Data quality / Relational join | The AI cannot connect the mortgage application to its appraisal report, valuation table, and property photographs. | Unsupported collateral decision or incomplete audit evidence | Foreign-key validation, schema contract, and evidence-completeness check |
 
 
 ## 6. How to Run & Environment Setup
