@@ -1,0 +1,137 @@
+SYNTHETIC INTERNAL DOCUMENT
+
+MERIDIAN FINANCIAL SERVICES
+FAIR-LENDING REVIEW MEMORANDUM
+
+Document ID: FIN-COMP-001
+Document Type: Internal Compliance Memo
+Owner: Compliance and Model Risk Management
+Effective Date: January 1, 2026
+Version: 1.0
+Authority Status: APPROVED
+Jurisdiction/Region: United States
+Confidentiality: Internal
+Access Group: Compliance, Risk, Internal Audit, and Lending Management
+
+TO: Consumer Lending Operations and Risk Management
+
+FROM: Compliance and Model Risk Management
+
+SUBJECT: Fair-Lending Review Procedures for Credit Decisions
+
+PURPOSE
+
+This memorandum establishes internal review procedures for identifying potential fairness and compliance concerns in the loan-review process.
+
+The memorandum does not replace applicable law, regulation, or official regulatory guidance.
+
+REVIEW PRINCIPLES
+
+Loan applications should be evaluated using the underwriting criteria applicable to the selected product and policy period.
+
+The decision process should be consistent, documented, and traceable.
+
+REVIEW TRIGGERS
+
+A loan application should be considered for additional compliance review when one or more of the following conditions exists:
+
+1. The decision appears inconsistent with the current underwriting policy.
+
+2. Applicants with materially similar financial characteristics appear to have received materially different treatment without a documented business reason.
+
+3. A manual override changes an automated decision without adequate documentation.
+
+4. The reason for an adverse decision cannot be clearly identified.
+
+5. The underwriting record contains information suggesting that an inappropriate applicant characteristic may have influenced the decision.
+
+6. A loan officer or reviewer identifies inconsistent application of product eligibility requirements.
+
+7. A current policy requirement appears to have been replaced by an older or superseded document during the decision process.
+
+8. The system retrieves a document whose authority status is DRAFT, SUPERSEDED, or EXPIRED when a CURRENT document is available.
+
+DOCUMENT REVIEW
+
+When reviewing a potential compliance issue, the reviewer should identify:
+
+* Applicant identifier
+* Application date
+* Loan product
+* Credit/risk tier
+* Requested amount
+* Applicable underwriting policy
+* Applicable product eligibility rules
+* Decision outcome
+* Manual-review status
+* Reason for escalation
+
+VERSION AND AUTHORITY CHECK
+
+The reviewer should confirm the following document metadata:
+
+Document ID
+Title
+Effective Date
+Version
+Authority Status
+Owner
+Jurisdiction/Region
+
+A document marked CURRENT should generally take precedence over a related document marked SUPERSEDED when evaluating a current application.
+
+Historical documents may be used to understand previous decisions but should not automatically be treated as current policy.
+
+MANUAL OVERRIDE REVIEW
+
+When a reviewer overrides an automated decision, the reviewer should record:
+
+* Original automated decision
+* New decision
+* Reason for override
+* Evidence supporting the override
+* Applicable policy section
+* Reviewer identifier
+* Review date
+
+An undocumented override should be escalated for quality and governance review.
+
+FAIR-LENDING WARNING SIGNS
+
+The following patterns may warrant additional analysis:
+
+* Different decisions for applicants with similar documented financial characteristics.
+* Different loan terms without an identifiable underwriting explanation.
+* Repeated manual overrides associated with one geographic region.
+* Repeated exceptions to product eligibility requirements.
+* Missing or inconsistent adverse-decision documentation.
+* Use of outdated underwriting rules.
+* Retrieval of conflicting policy documents.
+
+ESCALATION LEVELS
+
+LOW:
+Documentation issue that does not appear to affect the final decision.
+
+MEDIUM:
+Potential inconsistency in underwriting or product eligibility.
+
+HIGH:
+Potential compliance concern, unexplained decision difference, significant policy conflict, or repeated override pattern.
+
+REQUIRED ACTION
+
+When a potential fair-lending concern is identified, the reviewer should preserve the relevant evidence and escalate the matter according to the Loan Approval and Escalation Procedure.
+
+RELATED DOCUMENTS
+
+FIN-POL-001 — Internal Loan Underwriting Policy, Version 2.0
+FIN-PROC-001 — Loan Approval and Escalation Procedure
+FIN-RULE-001 — Loan Product Eligibility Rules
+FIN-POL-001-OLD — Internal Loan Underwriting Policy, Version 1.0
+
+IMPORTANT NOTICE
+
+This document is synthetic and was created for an academic data-engineering project. It is not an actual policy of Meridian Financial Services and must not be interpreted as legal, regulatory, lending, or compliance advice.
+
+END OF SYNTHETIC DOCUMENT
