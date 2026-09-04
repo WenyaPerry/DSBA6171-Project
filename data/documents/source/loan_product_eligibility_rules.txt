@@ -1,0 +1,88 @@
+SYNTHETIC INTERNAL DOCUMENT
+
+MERIDIAN FINANCIAL SERVICES
+LOAN PRODUCT ELIGIBILITY RULES
+
+Document ID: FIN-RULE-001
+Document Type: Product Eligibility Rules
+Owner: Consumer Lending Risk Management
+Effective Date: January 1, 2026
+Version: 2026.1
+Authority Status: APPROVED
+Jurisdiction/Region: United States
+Confidentiality: Internal
+Access Group: Lending, Risk, and Compliance
+
+PURPOSE
+
+This document defines synthetic eligibility requirements for Meridian Financial Services loan products.
+
+The rules are intended to be used together with the current Internal Loan Underwriting Policy.
+
+CURRENT PRODUCT ELIGIBILITY TABLE
+
+Product Code | Product Name | Minimum Credit Tier | Minimum Income | Maximum Loan Amount | Maximum DTI | Region | Review Level
+PL-100 | Personal Loan | B | $40,000 | $50,000 | 40% | All US | Standard
+PL-200 | Auto Loan | C | $35,000 | $75,000 | 45% | All US | Standard
+PL-300 | Debt Consolidation | B | $45,000 | $75,000 | 40% | All US | Standard
+PL-400 | Home Improvement | B | $45,000 | $100,000 | 40% | All US | Manual
+PL-500 | Small Business | A | $60,000 | $150,000 | 35% | NC | Enhanced
+PL-600 | Education Loan | B | $40,000 | $60,000 | 40% | All US | Standard
+PL-700 | Medical Expense Loan | C | $35,000 | $50,000 | 45% | All US | Standard
+PL-800 | Emergency Personal Loan | C | $40,000 | $25,000 | 45% | All US | Manual
+PL-900 | Green Home Loan | B | $50,000 | $125,000 | 38% | All US | Enhanced
+PL-1000 | Secured Personal Loan | C | $35,000 | $75,000 | 45% | All US | Standard
+PL-1100 | Family Support Loan | B | $40,000 | $50,000 | 40% | All US | Manual
+PL-1200 | Professional Development Loan | B | $45,000 | $80,000 | 40% | All US | Standard
+PL-1300 | Technology Purchase Loan | B | $40,000 | $35,000 | 42% | All US | Standard
+PL-1400 | Travel Loan | A | $50,000 | $40,000 | 35% | All US | Standard
+PL-1500 | Credit Rebuilding Loan | D | $30,000 | $20,000 | 50% | All US | Enhanced
+PL-1600 | Rural Home Improvement | C | $40,000 | $75,000 | 45% | NC, SC, VA | Manual
+PL-1700 | Small Business Expansion | A | $75,000 | $200,000 | 35% | NC | Enhanced
+PL-1800 | Energy Efficiency Loan | B | $45,000 | $90,000 | 40% | All US | Standard
+PL-1900 | Used Vehicle Loan | C | $35,000 | $50,000 | 45% | All US | Standard
+PL-2000 | Major Purchase Loan | B | $50,000 | $60,000 | 38% | All US | Standard
+
+INTERPRETATION RULES
+
+1. "Minimum Credit Tier" represents the minimum risk tier required for the product.
+
+2. Tier A represents the lowest modeled credit risk and Tier D represents the highest modeled credit risk.
+
+3. "Minimum Income" represents the minimum annual income required before the application can qualify for the product.
+
+4. "Maximum Loan Amount" represents the maximum requested amount permitted for the product.
+
+5. "Maximum DTI" represents the maximum debt-to-income ratio permitted for standard eligibility.
+
+6. "Review Level" identifies the expected level of underwriting review.
+
+7. "Standard" indicates that the application may proceed through standard underwriting when all requirements are satisfied.
+
+8. "Manual" indicates that the application requires human review.
+
+9. "Enhanced" indicates additional documentation or risk review may be required.
+
+10. Regional restrictions must be evaluated before approval.
+
+PRODUCT REVIEW EXAMPLES
+
+Example 1:
+An applicant with Tier B credit, $52,000 annual income, and a $45,000 requested Personal Loan meets the listed minimum credit tier, minimum income, and maximum loan amount for PL-100. The application may proceed to standard underwriting unless another rule triggers manual review.
+
+Example 2:
+An applicant requesting $60,000 under PL-100 exceeds the product's $50,000 maximum loan amount. The application does not meet the listed product eligibility requirement.
+
+Example 3:
+An applicant with Tier C credit requesting a $60,000 Auto Loan may satisfy the credit-tier requirement and maximum amount requirement for PL-200, subject to the remaining eligibility requirements.
+
+Example 4:
+An applicant requesting a Small Business loan outside North Carolina does not satisfy the listed regional requirement for PL-500.
+
+VERSION CONTROL
+
+This document is Version 2026.1 and is marked APPROVED.
+
+Earlier versions must not be used for current loan decisions unless specifically requested for historical analysis or audit purposes.
+
+END OF SYNTHETIC DOCUMENT
