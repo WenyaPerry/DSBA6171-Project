@@ -1,7 +1,7 @@
 # DSBA 6171: [Domain Name] Data & Knowledge Microcosm
 
 ## 1. Team Information & Roles
-* **Team Number / Name:** [e.g., Team 01 - FinTech]
+* **Team Number / Name:** Team 01 - FinTech
 * **Team Lead / Liaison:** Marie Vrablic
 * **Data & Ingestion Lead:** Aswani Karaturi
 * **Database & Analytics Lead:** Marie Vrablic
