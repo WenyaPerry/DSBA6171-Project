@@ -23,10 +23,11 @@
 ## 3. Microcosm Assets Overview
 
 ### Structured Operational Datasets (`data/structured/raw/`)
-* `file_1.csv` - [Brief description, row count, primary key]
-* `file_2.csv` - [Brief description, row count, primary key]
-* `file_3.csv` - [Brief description, row count, primary key & foreign keys]
-
+* applicants.csv - Stores applicant demographic, employment, income, and credit-risk information. Contains 150 rows. Primary key: applicant_id.
+* loan_products.csv - Stores loan-product terms, pricing baselines, risk criteria, maximum amounts, and DTI limits. Contains 2 rows. Primary key: product_code.
+* loan_applications.csv - Stores loan applications and their underwriting decisions, approved amounts, terms, and supporting policy references. Contains 150 rows. Primary key: application_id. Foreign keys: applicant_id and product_code.
+* credit_pull_events.csv - Stores credit-bureau inquiry events, credit scores, DTI ratios, risk classifications, and pull outcomes. Contains 200 rows. Primary key: credit_pull_event_id. Foreign keys: applicant_id and product_code.
+  
 ### Knowledge Corpus (`data/documents/source/`)
 * Contains **[X]** total documents (**[Y]** PDFs, **[Z]** TXT/MD files).
 * Includes structural challenges (tables, hierarchical headers) and version state diversity (e.g., Current vs. Superseded).
