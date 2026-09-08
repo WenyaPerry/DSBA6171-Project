@@ -7,5 +7,5 @@ DOC005,1026.1 Authority purpose coverage organization enforcement and liability,
 FIN-COMP-001,fair_lending_review_memo,TEXT,Internal,Compliance and Model Risk Management,2026-01-01,v1,United States,CURRENT,Internal,Compliance Risk Internal Audit and Lending Management
 FIN-RULE-001,Product Eligibility Rules,TEXT,Internal,Consumer Lending Risk Management,2026-01-01,v1,United States,CURRENT,Internal,Lending Risk and Compliance
 FIN-PROC-001,Procedure Organization: Meridian Financial Services,MD,Internal,Consumer Lending Operations,2026-01-01,v1,United States,CURRENT,Internal,Lending Operations Risk Compliance and Audit Teams
-FIN-POL-001-OLD,Internal Underwriting Policy Organization: Meridian Financial Services,MD,Internal,Consumer Lending Risk Management,2024-01-01,v1,United States,OLD,Internal,Lending Risk Compliance and Audit Teams
+FIN-POL-001-OLD,Internal Underwriting Policy Organization: Meridian Financial Services,MD,Internal,Consumer Lending Risk Management,2024-01-01,v1,United States,SUPERSEDED,Internal,Lending Risk Compliance and Audit Teams
 FIN-POL-001,Internal Underwriting Policy Organization: Meridian Financial Services,MD,Internal,Consumer Lending Risk Management,2026-01-01,v2,United States,CURRENT,Internal,Lending Risk Compliance and Audit Teams
