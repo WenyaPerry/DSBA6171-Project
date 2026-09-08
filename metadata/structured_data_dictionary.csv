@@ -1,2 +1,43 @@
 dataset,field_name,data_type,business_definition,key_status,is_required
-file_1.csv,record_id,VARCHAR,Unique primary key identifier,PK,TRUE
+applicants.csv,applicant_id,VARCHAR,Unique identifier for each applicant,PK,TRUE
+applicants.csv,income,DECIMAL,Applicant's reported annual income,,TRUE
+applicants.csv,employment_duration,INT,Length of the applicant's employment in months,,TRUE
+applicants.csv,credit_score,INT,Applicant's credit score at the time of application,,TRUE
+applicants.csv,credit_risk_tier,VARCHAR,Credit quality category assigned from the applicant's credit score,,TRUE
+applicants.csv,region,VARCHAR,Geographic region associated with the applicant,,TRUE
+applicants.csv,birth_date,DATE,Applicant's date of birth,,TRUE
+applicants.csv,employment_status,VARCHAR,Applicant's current employment category,,TRUE
+applicants.csv,housing_status,VARCHAR,Applicant's current housing arrangement,,TRUE
+applicants.csv,state,VARCHAR,Two-letter state code for the applicant's residence,,TRUE
+applicants.csv,application_date,DATETIME,Date and time when the applicant record was submitted,,TRUE
+credit_pull_events.csv,credit_pull_event_id,VARCHAR,Unique identifier for each credit pull event,PK,TRUE
+credit_pull_events.csv,applicant_id,VARCHAR,Identifier of the applicant associated with the credit pull,FK,TRUE
+credit_pull_events.csv,product_code,VARCHAR,Code of the loan product evaluated during the credit pull,FK,TRUE
+credit_pull_events.csv,event_date,DATE,Date when the credit bureau pull occurred,,TRUE
+credit_pull_events.csv,dti_ratio,DECIMAL,Applicant's debt-to-income ratio at the time of the credit pull,,TRUE
+credit_pull_events.csv,credit_score,INT,Credit score returned by the credit bureau when the pull succeeds,,FALSE
+credit_pull_events.csv,credit_score_tier_change,VARCHAR,Indicates whether the applicant's credit tier changed after the pull,,TRUE
+credit_pull_events.csv,bureau_name,VARCHAR,Name of the credit bureau used for the pull,,TRUE
+credit_pull_events.csv,pull_status,VARCHAR,Processing outcome of the credit pull request,,TRUE
+credit_pull_events.csv,failure_code,VARCHAR,Reason code recorded when a credit pull does not succeed,,FALSE
+credit_pull_events.csv,provider_request_id,VARCHAR,External request identifier assigned by the credit bureau provider,,TRUE
+credit_pull_events.csv,risk_status,VARCHAR,Underwriting risk category determined from the credit pull result,,TRUE
+credit_pull_events.csv,active_flag,BOOLEAN,Indicates whether the credit pull event record is active,,TRUE
+loan_applications.csv,application_id,VARCHAR,Unique identifier for each loan application,PK,TRUE
+loan_applications.csv,applicant_id,VARCHAR,Identifier of the applicant who submitted the loan application,FK,TRUE
+loan_applications.csv,product_code,VARCHAR,Code of the loan product requested in the application,FK,TRUE
+loan_applications.csv,decision_date,DATETIME,Date and time when the application decision was recorded,,TRUE
+loan_applications.csv,decision_status,VARCHAR,Current underwriting decision for the loan application,,TRUE
+loan_applications.csv,approved_amount,DECIMAL,Loan amount approved; zero when no amount has been approved,,TRUE
+loan_applications.csv,approved_term_length,INT,Approved repayment term in months; zero when no term has been approved,,TRUE
+loan_applications.csv,doc_id,VARCHAR,Identifier of the source document supporting the decision,,TRUE
+loan_applications.csv,policy_doc_id,VARCHAR,Identifier of the underwriting policy applied to the decision,,TRUE
+loan_applications.csv,rule_id_triggered,VARCHAR,Identifier of the policy rule that produced or escalated the decision,,TRUE
+loan_products.csv,product_code,VARCHAR,Unique code identifying each loan product,PK,TRUE
+loan_products.csv,risk_status_criteria,TEXT,Credit score ranges used to assign underwriting risk categories,,TRUE
+loan_products.csv,base_rate,DECIMAL,Baseline annual interest rate for the loan product,,TRUE
+loan_products.csv,max_amount,DECIMAL,Maximum principal or credit limit available for the loan product,,TRUE
+loan_products.csv,product_name,VARCHAR,Descriptive name of the loan product,,TRUE
+loan_products.csv,min_term_month,INT,Minimum permitted term length in months,,TRUE
+loan_products.csv,max_term_month,INT,Maximum permitted term length in months,,TRUE
+loan_products.csv,max_dti_score,DECIMAL,Maximum debt-to-income ratio allowed for the loan product,,TRUE
