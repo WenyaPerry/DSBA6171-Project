@@ -19,29 +19,30 @@ This document defines synthetic eligibility requirements for Meridian Financial 
 
 The rules are intended to be used together with the current Internal Loan Underwriting Policy.
 
-CURRENT PRODUCT ELIGIBILITY TABLE
+## Current Product Eligibility Table
 
-Product Code | Product Name | Minimum Credit Tier | Minimum Income | Maximum Loan Amount | Maximum DTI | Region | Review Level
-PL-100 | Personal Loan | B | $40,000 | $50,000 | 40% | All US | Standard
-PL-200 | Auto Loan | C | $35,000 | $75,000 | 45% | All US | Standard
-PL-300 | Debt Consolidation | B | $45,000 | $75,000 | 40% | All US | Standard
-PL-400 | Home Improvement | B | $45,000 | $100,000 | 40% | All US | Manual
-PL-500 | Small Business | A | $60,000 | $150,000 | 35% | NC | Enhanced
-PL-600 | Education Loan | B | $40,000 | $60,000 | 40% | All US | Standard
-PL-700 | Medical Expense Loan | C | $35,000 | $50,000 | 45% | All US | Standard
-PL-800 | Emergency Personal Loan | C | $40,000 | $25,000 | 45% | All US | Manual
-PL-900 | Green Home Loan | B | $50,000 | $125,000 | 38% | All US | Enhanced
-PL-1000 | Secured Personal Loan | C | $35,000 | $75,000 | 45% | All US | Standard
-PL-1100 | Family Support Loan | B | $40,000 | $50,000 | 40% | All US | Manual
-PL-1200 | Professional Development Loan | B | $45,000 | $80,000 | 40% | All US | Standard
-PL-1300 | Technology Purchase Loan | B | $40,000 | $35,000 | 42% | All US | Standard
-PL-1400 | Travel Loan | A | $50,000 | $40,000 | 35% | All US | Standard
-PL-1500 | Credit Rebuilding Loan | D | $30,000 | $20,000 | 50% | All US | Enhanced
-PL-1600 | Rural Home Improvement | C | $40,000 | $75,000 | 45% | NC, SC, VA | Manual
-PL-1700 | Small Business Expansion | A | $75,000 | $200,000 | 35% | NC | Enhanced
-PL-1800 | Energy Efficiency Loan | B | $45,000 | $90,000 | 40% | All US | Standard
-PL-1900 | Used Vehicle Loan | C | $35,000 | $50,000 | 45% | All US | Standard
-PL-2000 | Major Purchase Loan | B | $50,000 | $60,000 | 38% | All US | Standard
+| Product Code | Product Name | Minimum Credit Tier | Minimum Income | Maximum Loan Amount | Maximum DTI | Region | Review Level |
+|---|---|---:|---:|---:|---:|---|---|
+| PL-100 | Personal Loan | B | $40,000 | $50,000 | 40% | All US | Standard |
+| PL-200 | Auto Loan | C | $35,000 | $75,000 | 45% | All US | Standard |
+| PL-300 | Debt Consolidation | B | $45,000 | $75,000 | 40% | All US | Standard |
+| PL-400 | Home Improvement | B | $45,000 | $100,000 | 40% | All US | Manual |
+| PL-500 | Small Business | A | $60,000 | $150,000 | 35% | NC | Enhanced |
+| PL-600 | Education Loan | B | $40,000 | $60,000 | 40% | All US | Standard |
+| PL-700 | Medical Expense Loan | C | $35,000 | $50,000 | 45% | All US | Standard |
+| PL-800 | Emergency Personal Loan | C | $40,000 | $25,000 | 45% | All US | Manual |
+| PL-900 | Green Home Loan | B | $50,000 | $125,000 | 38% | All US | Enhanced |
+| PL-1000 | Secured Personal Loan | C | $35,000 | $75,000 | 45% | All US | Standard |
+| PL-1100 | Family Support Loan | B | $40,000 | $50,000 | 40% | All US | Manual |
+| PL-1200 | Professional Development Loan | B | $45,000 | $80,000 | 40% | All US | Standard |
+| PL-1300 | Technology Purchase Loan | B | $40,000 | $35,000 | 42% | All US | Standard |
+| PL-1400 | Travel Loan | A | $50,000 | $40,000 | 35% | All US | Standard |
+| PL-1500 | Credit Rebuilding Loan | D | $30,000 | $20,000 | 50% | All US | Enhanced |
+| PL-1600 | Rural Home Improvement | C | $40,000 | $75,000 | 45% | NC, SC, VA | Manual |
+| PL-1700 | Small Business Expansion | A | $75,000 | $200,000 | 35% | NC | Enhanced |
+| PL-1800 | Energy Efficiency Loan | B | $45,000 | $90,000 | 40% | All US | Standard |
+| PL-1900 | Used Vehicle Loan | C | $35,000 | $50,000 | 45% | All US | Standard |
+| PL-2000 | Major Purchase Loan | B | $50,000 | $60,000 | 38% | All US | Standard |
 
 INTERPRETATION RULES
 
