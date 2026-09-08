@@ -109,6 +109,33 @@ The reviewer should determine whether the application:
 * Requires compliance review.
 * Requires manual underwriting.
 
+## 6.1 Decision Reason-Code Table
+
+The following rule IDs provide standardized, traceable reasons for approving, denying, or escalating an application. The primary applicable rule ID must be recorded in `loan_applications.rule_id_triggered`.
+
+| Rule ID | Description | Applicable Outcome | Evidence Required | Manual Review Required |
+|---|---|---|---|---|
+| UW-APP-001 | All automatic approval requirements are satisfied | Approved | Complete applicant, credit-pull, product, and application records | No |
+| UW-AGE-001 | Applicant is below the minimum age of 18 | Denied | `birth_date` and `application_date` | No |
+| UW-INC-001 | Annual income is below the automatic approval threshold | Under Review | `applicants.income` and supporting income documentation | Yes |
+| UW-EMP-001 | Employment duration is below 12 months | Under Review | `employment_duration`, `employment_status`, and supporting documentation | Yes |
+| UW-CRD-001 | Credit risk does not satisfy the selected product criteria | Denied | Credit score, risk status, product code, and product risk criteria | No |
+| UW-CRD-002 | Credit score, credit tier, or risk status is inconsistent | Under Review | Applicant profile and credit-pull records | Yes |
+| UW-CRD-003 | Credit pull failed or remains pending | Under Review | `pull_status`, `failure_code`, and `provider_request_id` | Yes |
+| UW-CRD-004 | Credit-pull evidence is missing, inactive, duplicated, or conflicting | Under Review | Credit-pull event history and active status | Yes |
+| UW-DTI-001 | DTI exceeds the selected product maximum | Under Review | `dti_ratio` and `max_dti_score` | Yes |
+| UW-AMT-001 | Requested amount exceeds the selected product maximum | Under Review | Requested amount and `loan_products.max_amount` | Yes |
+| UW-TRM-001 | Requested term is outside the permitted product range | Under Review | Requested term, `min_term_month`, and `max_term_month` | Yes |
+| UW-DATA-001 | Birth date or application date is missing or invalid | Under Review | Missing-field or validation report | Yes |
+| UW-DATA-002 | Income information is missing, invalid, or unsupported | Under Review | Income field and verification evidence | Yes |
+| UW-DATA-003 | Product credit-risk criteria are missing or ambiguous | Under Review | Product record and applicable eligibility rules | Yes |
+| UW-DATA-004 | DTI information or the product DTI limit is missing or invalid | Under Review | Credit-pull and product records | Yes |
+| UW-DATA-005 | Requested amount or requested term is unavailable | Under Review | Application record and missing-field report | Yes |
+| UW-FL-001 | Potential fair-lending inconsistency or prohibited-factor concern | Under Review and Compliance Escalation | Comparison results, policy references, and audit evidence | Yes |
+
+When multiple rules apply, `rule_id_triggered` must contain the rule that principally determined the outcome. Supporting rule IDs should be preserved in an audit log or application-rule bridge table when available.
+
+A denied application must use a specific and accurate reason that reflects the factor actually evaluated. A generic or approximate reason must not be substituted merely because it is the closest available code.
 ---
 
 # 7. Decision Categories
