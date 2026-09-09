@@ -6,7 +6,7 @@
 
 | Document Metadata | Value |
 |---|---|
-| Document ID | FIN-POL-001-OLD |
+| Document ID | FIN-POL-001 |
 | Document Type | Internal Personal Loan Underwriting Policy |
 | Organization | Meridian Financial Services (Synthetic) |
 | Owner | Consumer Lending Risk Management |
