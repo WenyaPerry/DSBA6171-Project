@@ -64,7 +64,10 @@
 | **Why the linkage matters** | This linkage allows the AI system to determine whether the recorded approvals are consistent with the current product and underwriting rules. It also identifies records that require compliance screening before making a fair-lending conclusion. The system can trace each structured value to the controlling policy language and distinguish a policy violation from an actual protected-group treatment difference. |
 ---
 
-## 5. Controlled Quality Issues & Risk Matrix Summary
+## 5. Controlled Quality Issues 
+
+
+## 6. Business Risk Matrix Summary
 | Quality Problem | Affected Layer | AI Impact | Business Consequence | Future Control |
 |---|---|---|---|---|
 | Policy version is selected using `decision_date` instead of `application_date`. For example, AP-10016 and AP-10031 applied in 2025 but were initially linked to the 2026 policy because their decisions occurred in 2026. | Knowledge Linkage / Temporal Logic | The AI retrieves underwriting requirements that were not in effect when the applicants applied. | Incorrect decisions, failed historical reconstruction, and compliance risk. | Select the policy using `application_date` and documented effective dates. Link 2024–2025 applications to `FIN-POL-001-OLD` and applications from 2026 onward to `FIN-POL-001`. |
@@ -74,7 +77,7 @@
 | Protected-group monitoring attributes are unavailable or are mixed into underwriting inputs. | Fair-Lending Analytics / Access Control | The AI either cannot test fair-lending consistency or may improperly use protected information during decisioning. | The fairness business question cannot be tested reliably, and inappropriate use could create compliance exposure. | Store synthetic or lawfully available monitoring attributes in a restricted `fair_lending_monitoring.csv`. Use them only for post-decision compliance testing, never for approval, denial, pricing, amount, term, or risk classification. |
 
 
-## 6. How to Run & Environment Setup
+## 7. How to Run & Environment Setup
 1. Clone this repository to your local machine.
 2. Install the required dependencies:
    ```bash
