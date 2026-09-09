@@ -10,7 +10,7 @@
 | Organization | Meridian Financial Services (Synthetic) |
 | Owner | Consumer Lending Risk Management |
 | Effective Date | January 1, 2026 |
-| Version | 2.0 |
+| Version | 3.0 |
 | Authority Status | CURRENT |
 | Jurisdiction/Region | United States |
 | Confidentiality | Internal |
