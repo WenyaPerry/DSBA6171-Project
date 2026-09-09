@@ -9,7 +9,7 @@
 | Document type | Personal Loan Product Eligibility Rules |
 | Owner | Consumer Lending Risk Management |
 | Effective date | January 1, 2026 |
-| Version | 2026.1 |
+| Version | 2 |
 | Authority status | APPROVED |
 | Jurisdiction | United States |
 | Related policy | FIN-POL-001, Internal Personal Loan Underwriting Policy, Version 2026.1 |
