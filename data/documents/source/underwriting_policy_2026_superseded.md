@@ -6,7 +6,7 @@
 **Document Type:** Internal Underwriting Policy
 **Organization:** Meridian Financial Services (Synthetic)
 **Owner:** Consumer Lending Risk Management
-**Effective Date:** January 1, 2026
+**Effective Date:** January 1, 2025
 **Version:** 2.0
 **Authority Status:** CURRENT
 **Jurisdiction/Region:** United States
