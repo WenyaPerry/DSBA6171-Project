@@ -5,11 +5,11 @@
 
 | Document control | Value |
 |---|---|
-| Document ID | FIN-COMP-001 |
+| Document ID | FIN-COMP-002 |
 | Document type | Internal Compliance Memorandum |
 | Owner | Fair-Lending Compliance and Model Risk Management |
 | Effective date | January 1, 2026 |
-| Version | 2 |
+| Version | 2.0 |
 | Authority status | APPROVED |
 | Jurisdiction | United States |
 | Confidentiality | Restricted Internal |
