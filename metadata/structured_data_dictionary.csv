@@ -1,43 +1,43 @@
-dataset,field_name,data_type,business_definition,key_status,is_required
-applicants.csv,applicant_id,VARCHAR(50),"Unique identifier for each applicant (for example, AP-10001)",PK,TRUE
-applicants.csv,income,"DECIMAL(12,2)",Self-reported or verified gross annual income in USD,,TRUE
-applicants.csv,employment_duration,INT,Length of time with the applicant's current employer in months,,TRUE
-applicants.csv,credit_score,INT,Baseline credit score at profile creation; expected range is 300 to 850,,TRUE
-applicants.csv,credit_risk_tier,VARCHAR(20),"Internal credit classification: Excellent, Good, Fair, or Subprime",,TRUE
-applicants.csv,region,VARCHAR(50),"Geographic market region: Northeast, Southeast, Midwest, Southwest, or West",,TRUE
-applicants.csv,birth_date,DATE,Applicant's date of birth; applicant should be at least 18 years old,,TRUE
-applicants.csv,employment_status,VARCHAR(20),"Employment category: employed, self-employed, or retired",,TRUE
-applicants.csv,housing_status,VARCHAR(20),"Housing arrangement: Rent, own, or other",,TRUE
-applicants.csv,state,CHAR(2),Two-letter abbreviation for the applicant's state of residence,,TRUE
-applicants.csv,application_date,DATETIME,Date and time when the applicant record was submitted,,TRUE
-credit_pull_events.csv,credit_pull_event_id,VARCHAR(50),"Unique identifier for each credit pull event (for example, EV-10001)",PK,TRUE
-credit_pull_events.csv,applicant_id,VARCHAR(50),Identifier linking the event to applicants.applicant_id,FK,TRUE
-credit_pull_events.csv,product_code,VARCHAR(10),Code linking the event to loan_products.product_code,FK,TRUE
-credit_pull_events.csv,event_date,DATE,Date when the credit bureau pull occurred,,TRUE
-credit_pull_events.csv,dti_ratio,"DECIMAL(5,2)",Applicant's debt-to-income ratio as a percentage at the time of the credit pull,,TRUE
-credit_pull_events.csv,credit_score,INT,Score returned by the bureau; 300 to 850 when present and blank when the pull fails,,FALSE
-credit_pull_events.csv,credit_score_tier_change,VARCHAR(20),"Tier-change result: No_Change, Upgraded, Downgraded, or Not_Applicable",,TRUE
-credit_pull_events.csv,bureau_name,VARCHAR(20),"Credit bureau requested: EQUIFAX, EXPERIAN, or TRANSUNION",,TRUE
-credit_pull_events.csv,pull_status,VARCHAR(20),"Operational result of the pull: SUCCESS, FAILED, or PENDING",,TRUE
-credit_pull_events.csv,failure_code,VARCHAR(30),Failure reason; required for failed pulls and blank for successful pulls,,FALSE
-credit_pull_events.csv,provider_request_id,VARCHAR(100),Unique tracking identifier returned by the bureau provider,,TRUE
-credit_pull_events.csv,risk_status,VARCHAR(20),"Underwriting category: Low Risk, Moderate Risk, High Risk, Very High Risk, or Review",,TRUE
-credit_pull_events.csv,active_flag,BOOLEAN,Indicates whether the credit pull event record is active,,TRUE
-loan_applications.csv,application_id,VARCHAR(50),"Unique identifier for each loan application (for example, LA-10001)",PK,TRUE
-loan_applications.csv,applicant_id,VARCHAR(50),Identifier linking the application to applicants.applicant_id,FK,TRUE
-loan_applications.csv,product_code,VARCHAR(10),Code linking the application to loan_products.product_code,FK,TRUE
-loan_applications.csv,decision_date,DATETIME,Date and time when the application decision was recorded,,TRUE
-loan_applications.csv,decision_status,VARCHAR(20),"Underwriting result: Approved, Denied, or Under Review",,TRUE
-loan_applications.csv,approved_amount,"DECIMAL(12,2)",Loan amount approved; zero when no amount has been approved,,TRUE
-loan_applications.csv,approved_term_length,INT,Approved repayment term in months; zero when no term has been approved,,TRUE
-loan_applications.csv,doc_id,VARCHAR(50),Identifier of the source document supporting the decision,,TRUE
-loan_applications.csv,policy_doc_id,VARCHAR(50),Identifier of the underwriting policy applied to the decision,,TRUE
-loan_applications.csv,rule_id_triggered,VARCHAR(50),Identifier of the policy rule that produced or escalated the decision,,TRUE
-loan_products.csv,product_code,VARCHAR(10),Unique product code: MNT-01 for term loans or REV-02 for revolving credit,PK,TRUE
-loan_products.csv,risk_status_criteria,TEXT,Credit score ranges used to assign underwriting risk categories,,TRUE
-loan_products.csv,base_rate,"DECIMAL(5,4)",Baseline annual percentage rate before adjustments,,TRUE
-loan_products.csv,max_amount,"DECIMAL(12,2)",Maximum principal amount or credit limit that may be issued,,TRUE
-loan_products.csv,product_name,VARCHAR(250),Descriptive name of the credit product,,TRUE
-loan_products.csv,min_term_month,INT,Minimum permitted term length in months,,TRUE
-loan_products.csv,max_term_month,INT,Maximum permitted term length in months,,TRUE
-loan_products.csv,max_dti_score,"DECIMAL(5,2)",Maximum permitted debt-to-income ratio expressed as a percentage,,TRUE
+Table Name,Column Name,Data Type,Nullable?,Key Type,Default,Required?,Definition & Business Rules
+Applicants Dataset,applicant_id,VARCHAR(50),No,PK,None,TRUE,"Unique identifier for each applicant (e.g., UUID or AP-10001)."
+Applicants Dataset,income,"DECIMAL(12,2)",No,None,None,TRUE,Self-reported or verified gross annual income from tax documents in USD.
+Applicants Dataset,employment_duration,INT,No,None,None,TRUE,Length of time with current employer in months.
+Applicants Dataset,credit_score,INT,No,None,None,TRUE,Baseline credit score (FICO/VantageScore) at profile creation.
+Applicants Dataset,credit_risk_tier,VARCHAR(20),No,None,None,TRUE,"Internal risk classification. Values: Excellent, Good, Fair, Subprime."
+Applicants Dataset,region,VARCHAR(50),No,None,None,TRUE,"Geographic location/market territory. Values: Northeast, Southeast, Midwest, Southwest, West."
+Applicants Dataset,birth_date,DATE,No,None,None,TRUE,Date of birth. Validation: Current Date - birth_date >= 18.
+Applicants Dataset,employment_status,VARCHAR(20),No,None,None,TRUE,"Legal classification of work relationship. Values: employed, self-employed, retired."
+Applicants Dataset,housing_status,VARCHAR(20),No,None,None,TRUE,"Legal nature of residential situation. Values: Rent, own, other."
+Applicants Dataset,state,CHAR(2),No,None,None,TRUE,"Applicant's state abbreviation (e.g., 'NC')."
+Applicants Dataset,application_date,TIMESTAMP,No,None,CURRENT_DATE,TRUE,Time and date the application was submitted.
+Credit Pull Events Dataset,credit_pull_event_id,VARCHAR(50),No,PK,None,TRUE,"Unique identifier for each individual transaction event (e.g., EV-10001)."
+Credit Pull Events Dataset,applicant_id,VARCHAR(50),No,FK,None,TRUE,Links back to applicants.applicant_id.
+Credit Pull Events Dataset,product_code,VARCHAR(20),No,FK,None,TRUE,Product Code for the loan the applicant is applying for.
+Credit Pull Events Dataset,event_date,DATE,No,None,CURRENT_DATE,TRUE,Timestamp of when the credit pull was executed.
+Credit Pull Events Dataset,dti_ratio,"DECIMAL(5,2)",Yes,None,None,TRUE,Debt to income ratio at time of credit pull.
+Credit Pull Events Dataset,credit_score,INT,Yes,None,None,TRUE,Score returned by bureau. Validation: Must be between 300 and 850. Can be null if pull failed.
+Credit Pull Events Dataset,credit_score_tier_change,VARCHAR(20),No,None,None,TRUE,"System-calculated tier change. Values: No_Change, Upgraded, Downgraded, Not_Applicable. Rule: Use Not_Applicable if first pull or if pull failed."
+Credit Pull Events Dataset,bureau_name,VARCHAR(20),No,None,None,TRUE,"Credit bureau requested. Values: EQUIFAX, EXPERIAN, TRANSUNION."
+Credit Pull Events Dataset,pull_status,VARCHAR(20),No,None,'PENDING',TRUE,"Operational result. Values: SUCCESS, FAILED, PENDING."
+Credit Pull Events Dataset,failure_code,VARCHAR(30),Yes,None,NULL,TRUE,"Reason for pull failure. Rule: Must be NULL if pull_status is SUCCESS. Values: RATE_LIMITED, PROVIDER_ERROR, TIMEOUT, INVALID_REQUEST."
+Credit Pull Events Dataset,provider_request_id,VARCHAR(100),No,None,None,TRUE,Unique tracking string returned by the provider. Used to catch duplicate responses.
+Credit Pull Events Dataset,risk_status,VARCHAR(20),No,None,None,TRUE,"Credit-tier rules used to classify risk. Values:Low Risk, Moderate Risk, High Risk, Very High Risk, Review."
+Loan Products Reference Dataset,product_code,VARCHAR(20),No,PK,None,TRUE,"Short identifying code. Values: MNT-01 (Term/Installment), REV-02 (Revolving)."
+Loan Products Reference Dataset,risk_status_criteria,TEXT,No,None,None,TRUE,"Plain text mapping score brackets to Low, Moderate, High, or Very High Risk tiers.(see below).*"
+Loan Products Reference Dataset,base_rate,"DECIMAL(5,4)",No,None,None,TRUE,"Baseline annual percentage rate (APR) before adjustments (e.g., 0.0550 = 5.50%)."
+Loan Products Reference Dataset,max_amount,"DECIMAL(12,2)",No,None,None,TRUE,Hard cap on the principal amount that can be issued.
+Loan Products Reference Dataset,product_name,VARCHAR(250),No,None,None,TRUE,Descriptive name of the credit product.
+Loan Products Reference Dataset,min_term_month,INT,No,None,None,TRUE,"Minimum repayment length. Values: 24, 36, 48, 60, 72."
+Loan Products Reference Dataset,max_term_month,INT,No,None,None,TRUE,"Maximum repayment length. Values: 24, 36, 48, 60, 72."
+Loan Products Reference Dataset,max_dti_score,"DECIMAL(5,2)",No,None,None,TRUE,"Maximum permitted debt-to-income ratio represented as a percentage (e.g., 36.50 = 36.5%)."
+Loan Products Reference Dataset,application_id,VARCHAR(50),No,PK,None,TRUE,Unique identifier for each loan application record.
+Loan Products Reference Dataset,applicant_id,VARCHAR(50),No,FK,None,TRUE,References applicant_id in applicants.csv to identify the borrowing entity.
+Loan Products Reference Dataset,product_code,VARCHAR(20),No,FK,None,TRUE,"References product_code in loan_products.csv to map terms, base rate, and eligibility rules."
+Loan Products Reference Dataset,decision_date,TIMESTAMP,No,None,None,TRUE,The timestamp indicating when the loan application was finalized.
+Loan Products Reference Dataset,decision_status,VARCHAR(20),No,None,None,TRUE,"Status of the application: Approved, Denied, Under Review."
+Loan Products Reference Dataset,approved_amount,INT,No,None,None,TRUE,The final loan amount approved for the applicant (0 if denied).
+Loan Products Reference Dataset,approved_term_length,INT,No,None,None,TRUE,The approved duration/payback term of the loan (in number of months).
+Loan Products Reference Dataset,doc_id,VARCHAR(50),No,FK,None,TRUE,Foreign key referencing the underwriting policy documentation governing the decision.
+Loan Products Reference Dataset,policy_doc_id,VARCHAR(50),Yes,FK,None,TRUE,Foreign key referencing the underwriting policy documentation governing the decision.
+Loan Products Reference Dataset,rule_id_triggered,VARCHAR(50),Yes,None,None,TRUE,Logs the specific underwriting or eligibility rule ID that triggered the decision status.
+Loan Products Reference Dataset,active_flag,BOOLEAN,No,None,TRUE,TRUE,"Indicates whether the product version is currently active. Values: TRUE, FALSE."
