@@ -9,7 +9,7 @@
 | Document type | Internal Compliance Memorandum |
 | Owner | Fair-Lending Compliance and Model Risk Management |
 | Effective date | January 1, 2026 |
-| Version | 1.1 |
+| Version | 2 |
 | Authority status | APPROVED |
 | Jurisdiction | United States |
 | Confidentiality | Restricted Internal |
