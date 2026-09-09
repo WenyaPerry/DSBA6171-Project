@@ -1,0 +1,43 @@
+Table Name,Column Name,Data Type,Nullable?,Key Type,Default,Required?,Definition & Business Rules
+Applicants Dataset,applicant_id,VARCHAR(50),No,PK,None,TRUE,"Unique identifier for each applicant (e.g., UUID or AP-10001)."
+Applicants Dataset,income,"DECIMAL(12,2)",No,None,None,TRUE,Self-reported or verified gross annual income from tax documents in USD.
+Applicants Dataset,employment_duration,INT,No,None,None,TRUE,Length of time with current employer in months.
+Applicants Dataset,credit_score,INT,No,None,None,TRUE,Baseline credit score (FICO/VantageScore) at profile creation.
+Applicants Dataset,credit_risk_tier,VARCHAR(20),No,None,None,TRUE,"Internal risk classification. Values: Excellent, Good, Fair, Subprime."
+Applicants Dataset,region,VARCHAR(50),No,None,None,TRUE,"Geographic location/market territory. Values: Northeast, Southeast, Midwest, Southwest, West."
+Applicants Dataset,birth_date,DATE,No,None,None,TRUE,Date of birth. Validation: Current Date - birth_date >= 18.
+Applicants Dataset,employment_status,VARCHAR(20),No,None,None,TRUE,"Legal classification of work relationship. Values: employed, self-employed, retired."
+Applicants Dataset,housing_status,VARCHAR(20),No,None,None,TRUE,"Legal nature of residential situation. Values: Rent, own, other."
+Applicants Dataset,state,CHAR(2),No,None,None,TRUE,"Applicant's state abbreviation (e.g., 'NC')."
+Applicants Dataset,application_date,TIMESTAMP,No,None,CURRENT_DATE,TRUE,Time and date the application was submitted.
+Credit Pull Events Dataset,credit_pull_event_id,VARCHAR(50),No,PK,None,TRUE,"Unique identifier for each individual transaction event (e.g., EV-10001)."
+Credit Pull Events Dataset,applicant_id,VARCHAR(50),No,FK,None,TRUE,Links back to applicants.applicant_id.
+Credit Pull Events Dataset,product_code,VARCHAR(20),No,FK,None,TRUE,Product Code for the loan the applicant is applying for.
+Credit Pull Events Dataset,event_date,DATE,No,None,CURRENT_DATE,TRUE,Timestamp of when the credit pull was executed.
+Credit Pull Events Dataset,dti_ratio,"DECIMAL(5,2)",Yes,None,None,TRUE,Debt to income ratio at time of credit pull.
+Credit Pull Events Dataset,credit_score,INT,Yes,None,None,TRUE,Score returned by bureau. Validation: Must be between 300 and 850. Can be null if pull failed.
+Credit Pull Events Dataset,credit_score_tier_change,VARCHAR(20),No,None,None,TRUE,"System-calculated tier change. Values: No_Change, Upgraded, Downgraded, Not_Applicable. Rule: Use Not_Applicable if first pull or if pull failed."
+Credit Pull Events Dataset,bureau_name,VARCHAR(20),No,None,None,TRUE,"Credit bureau requested. Values: EQUIFAX, EXPERIAN, TRANSUNION."
+Credit Pull Events Dataset,pull_status,VARCHAR(20),No,None,'PENDING',TRUE,"Operational result. Values: SUCCESS, FAILED, PENDING."
+Credit Pull Events Dataset,failure_code,VARCHAR(30),Yes,None,NULL,TRUE,"Reason for pull failure. Rule: Must be NULL if pull_status is SUCCESS. Values: RATE_LIMITED, PROVIDER_ERROR, TIMEOUT, INVALID_REQUEST."
+Credit Pull Events Dataset,provider_request_id,VARCHAR(100),No,None,None,TRUE,Unique tracking string returned by the provider. Used to catch duplicate responses.
+Credit Pull Events Dataset,risk_status,VARCHAR(20),No,None,None,TRUE,"Credit-tier rules used to classify risk. Values:Low Risk, Moderate Risk, High Risk, Very High Risk, Review."
+Loan Products Reference Dataset,product_code,VARCHAR(20),No,PK,None,TRUE,"Short identifying code. Values: MNT-01 (Term/Installment), REV-02 (Revolving)."
+Loan Products Reference Dataset,risk_status_criteria,TEXT,No,None,None,TRUE,"Plain text mapping score brackets to Low, Moderate, High, or Very High Risk tiers.(see below).*"
+Loan Products Reference Dataset,base_rate,"DECIMAL(5,4)",No,None,None,TRUE,"Baseline annual percentage rate (APR) before adjustments (e.g., 0.0550 = 5.50%)."
+Loan Products Reference Dataset,max_amount,"DECIMAL(12,2)",No,None,None,TRUE,Hard cap on the principal amount that can be issued.
+Loan Products Reference Dataset,product_name,VARCHAR(250),No,None,None,TRUE,Descriptive name of the credit product.
+Loan Products Reference Dataset,min_term_month,INT,No,None,None,TRUE,"Minimum repayment length. Values: 24, 36, 48, 60, 72."
+Loan Products Reference Dataset,max_term_month,INT,No,None,None,TRUE,"Maximum repayment length. Values: 24, 36, 48, 60, 72."
+Loan Products Reference Dataset,max_dti_score,"DECIMAL(5,2)",No,None,None,TRUE,"Maximum permitted debt-to-income ratio represented as a percentage (e.g., 36.50 = 36.5%)."
+Loan Products Reference Dataset,application_id,VARCHAR(50),No,PK,None,TRUE,Unique identifier for each loan application record.
+Loan Products Reference Dataset,applicant_id,VARCHAR(50),No,FK,None,TRUE,References applicant_id in applicants.csv to identify the borrowing entity.
+Loan Products Reference Dataset,product_code,VARCHAR(20),No,FK,None,TRUE,"References product_code in loan_products.csv to map terms, base rate, and eligibility rules."
+Loan Products Reference Dataset,decision_date,TIMESTAMP,No,None,None,TRUE,The timestamp indicating when the loan application was finalized.
+Loan Products Reference Dataset,decision_status,VARCHAR(20),No,None,None,TRUE,"Status of the application: Approved, Denied, Under Review."
+Loan Products Reference Dataset,approved_amount,INT,No,None,None,TRUE,The final loan amount approved for the applicant (0 if denied).
+Loan Products Reference Dataset,approved_term_length,INT,No,None,None,TRUE,The approved duration/payback term of the loan (in number of months).
+Loan Products Reference Dataset,doc_id,VARCHAR(50),No,FK,None,TRUE,Foreign key referencing the underwriting policy documentation governing the decision.
+Loan Products Reference Dataset,policy_doc_id,VARCHAR(50),Yes,FK,None,TRUE,Foreign key referencing the underwriting policy documentation governing the decision.
+Loan Products Reference Dataset,rule_id_triggered,VARCHAR(50),Yes,None,None,TRUE,Logs the specific underwriting or eligibility rule ID that triggered the decision status.
+Loan Products Reference Dataset,active_flag,BOOLEAN,No,None,TRUE,TRUE,"Indicates whether the product version is currently active. Values: TRUE, FALSE."
