@@ -7,7 +7,7 @@ Document ID: FIN-RULE-001
 Document Type: Product Eligibility Rules
 Owner: Consumer Lending Risk Management
 Effective Date: January 1, 2026
-Version: 2026.1
+Version: 1
 Authority Status: APPROVED
 Jurisdiction/Region: United States
 Confidentiality: Internal
