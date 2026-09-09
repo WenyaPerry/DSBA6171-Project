@@ -6,7 +6,7 @@
 **Document Type:** Procedure
 **Organization:** Meridian Financial Services (Synthetic)
 **Owner:** Consumer Lending Operations
-**Effective Date:** January 1, 2026
+**Effective Date:** January 1, 2025
 **Version:** 1.0
 **Authority Status:** APPROVED
 **Jurisdiction/Region:** United States
