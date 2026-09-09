@@ -6,7 +6,7 @@ FAIR-LENDING REVIEW MEMORANDUM
 Document ID: FIN-COMP-001
 Document Type: Internal Compliance Memo
 Owner: Compliance and Model Risk Management
-Effective Date: January 1, 2026
+Effective Date: January 1, 2025
 Version: 1.0
 Authority Status: APPROVED
 Jurisdiction/Region: United States
