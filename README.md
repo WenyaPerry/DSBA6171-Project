@@ -29,7 +29,7 @@
 * credit_pull_events.csv - Stores credit-bureau inquiry events, credit scores, DTI ratios, risk classifications, and pull outcomes. Contains 200 rows. Primary key: credit_pull_event_id. Foreign keys: applicant_id and product_code.
   
 ### Knowledge Corpus (`data/documents/source/`)
-* Contains **[X]** total documents (**[Y]** PDFs, **[Z]** TXT/MD files).
+* Contains **14** total documents (**5** PDFs, **9** TXT/MD files).
 * Includes structural challenges (tables, hierarchical headers) and version state diversity (e.g., Current vs. Superseded).
 
 ---
