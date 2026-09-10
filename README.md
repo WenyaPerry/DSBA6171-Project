@@ -65,6 +65,16 @@
 ---
 
 ## 5. Controlled Quality Issues 
+| Quality Problem | Example | Business Consequence | Future Control |
+|---|---|---|---|
+| Unauthorized changes | The AI can't identify the changes when there is any update/modify to the data  | This is a Governance/control failure, Underwriter changes income after verification without audit trail |
+| Invalid Data | We will have some predefined set of Statuses for the Loan but if any status is out of the standard status, AI can't recognize the data. For example Loan_status = 'May Be' instead of Approve/Denied/Under Review | Breaks reporting and decision logic|
+| Missing Data | If any required fields data is missing to take the decision on loan for the underwriter, this will effect the outcome of the decision. For example Customer has no Annual_Income | Underwriting decision may be incomplete |  |
+| Duplicate Data | Same borrower exists with 2 Customer IDs | Can distort exposure and credit decisions |  |
+| Broken audit trail | No record of who changed an underwriting decision | Difficult to investigate decisions and Compliance/Regulation issues |  |
+| No rule hierarchy | Federal, state, investor and company rules all have equal priority | Conflicting requirements | |
+| Wrong rule mapping | Mortgage rule accidentally applied to Personal loans | Incorrect loan decision| |
+| Incomplete rule | For example Rule specifies income requirement but not acceptable income sources | AI/Different underwriters may interpret differently | |
 
 
 ## 6. Business Risk Matrix Summary
