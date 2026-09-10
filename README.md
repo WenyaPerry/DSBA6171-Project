@@ -30,8 +30,9 @@
   
 ### Knowledge Corpus (`data/documents/source/`)
 * Contains **14** total documents (**5** PDFs, **9** TXT/MD files).
-* Includes structural challenges (tables, hierarchical headers) and version state diversity (e.g., Current vs. Superseded).
+* The knowledge corpus contains both regulatory/reference PDFs and internal policy/procedure documents. The structural challenge is that the documents are not all in the same format: some are PDFs with formal regulatory language, long sections, tables, and hierarchical headings, while others are Markdown or text files with simpler internal policy rules. This means an AI agent must handle different document layouts and extract meaning from both structured and semi-structured content.
 
+* The corpus also includes version state diversity because several internal documents have both current and superseded versions. This matters because the AI agent must identify which policy version is active and avoid using outdated rules when answering questions or supporting loan approval and escalation decisions.
 ---
 
 ## 4. Structured Signal to Knowledge Linkage
