@@ -1,4 +1,4 @@
-# DSBA 6171: [Domain Name] Data & Knowledge Microcosm
+# DSBA 6171: [FinTech] Data & Knowledge Microcosm
 
 ## 1. Team Information & Roles
 * **Team Number / Name:** Team 01 - FinTech
