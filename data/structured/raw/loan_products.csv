@@ -1,0 +1,11 @@
+product_code,risk_status_criteria,base_rate,max_amount,product_name,min_term_month,max_term_month,max_dti_score
+MNT-01,Moderate Risk,0.055,50000,Standard Term Personal Loan,24,60,36.5
+REV-02,Low Risk,0.125,25000,Revolving Personal Line of Credit,24,72,40
+MNT-03,Moderate Risk,0.0695,60000,Debt Consolidation Personal Loan,24,72,38
+MNT-04,High Risk,0.1695,10000,Emergency Expense Personal Loan,6,24,45
+MNT-05,High Risk,0.0495,75000,Secured Personal Loan,24,84,42
+MNT-06,High Risk,0.0895,30000,Medical Expense Personal Loan,12,60,43
+MNT-07,Moderate Risk,0.0795,75000,Home Improvement Personal Loan,24,84,38
+MNT-08,Moderate Risk,0.0745,40000,Professional Development Personal Loan,12,60,40
+MNT-09,High Risk,0.1895,15000,Credit Builder Personal Loan,6,24,45
+MNT-10,Low Risk,0.045,100000,Prime Personal Loan,24,84,32
