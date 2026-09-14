@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "dataset": "applicants",
+  "primary_key": "applicant_id: Acts as the primary logical key linking to third-party credit verification pulls and downstream loan approval routing.",
+  "relationships": [
+    "Links to credit_pull_events.applicant_id",
+    "Links to loan_applications.applicant_id"
+  ],
+  "columns": [
+    {
+      "column": "applicant_id",
+      "schema_expectations": "Required string; primary key; unique; not null."
+    },
+    {
+      "column": "application_date",
+      "schema_expectations": "Required date; YYYY-MM-DD format; not null."
+    },
+    {
+      "column": "income",
+      "schema_expectations": "Required numeric; non-negative; currency unit USD."
+    },
+    {
+      "column": "employment_status",
+      "schema_expectations": "Required string; restricted to specific categorization tags (e.g., EMPLOYED, SELF_EMPLOYED, UNEMPLOYED)."
+    }
+  ]
+}

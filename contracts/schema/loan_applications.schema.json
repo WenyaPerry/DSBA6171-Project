@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "dataset": "loan_applications",
+  "primary_key": "application_id",
+  "relationships": [
+    "Links upstream to applicant_demographics.applicant_id",
+    "Links to loan_products.product_code"
+  ],
+  "columns": [
+    {
+      "column": "application_id",
+      "schema_expectations": "Required string; primary key; unique; not null."
+    },
+    {
+      "column": "applicant_id",
+      "schema_expectations": "Required string; foreign key referencing applicant_demographics; not null."
+    },
+    {
+      "column": "product_code",
+      "schema_expectations": "Required string; foreign key referencing loan_products; not null."
+    },
+    {
+      "column": "underwriting_status",
+      "schema_expectations": "Required string; restricted values (e.g., APPROVED, DENIED, REFERRED)."
+    },
+    {
+      "column": "approved_amount",
+      "schema_expectations": "Conditional numeric; integer; currency unit USD; must not exceed max_amount from the matching product_code."
+    }
+  ]
+}

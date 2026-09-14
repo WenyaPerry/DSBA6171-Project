@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "dataset": "credit_pull_events",
+  "primary_key": "credit_pull_event_id",
+  "relationships": [
+    "Links back to applicant_demographics.applicant_id",
+    "Links to loan_products.product_code via product_code reference mapping"
+  ],
+  "columns": [
+    {
+      "column": "credit_pull_event_id",
+      "schema_expectations": "Required string; primary key; unique; not null."
+    },
+    {
+      "column": "applicant_id",
+      "schema_expectations": "Required string; foreign key referencing applicant_demographics; not null."
+    },
+    {
+      "column": "credit_score",
+      "schema_expectations": "Required integer; bounded between 300 and 850 for standard models."
+    },
+    {
+      "column": "dti_ratio",
+      "schema_expectations": "Required numeric; decimal or percent format; non-negative."
+    },
+    {
+      "column": "risk_status",
+      "schema_expectations": "Required string; derived classification mapped from risk_status_criteria."
+    }
+  ]
+}
