@@ -214,11 +214,5 @@
       "rule": "risk_status_policy_alignment",
       "description": "risk_status must be derived from approved underwriting policy logic and remain consistent with credit_score, DTI ratio, and product rules."
     }
-  ],
-  "source_files_merged": [
-    "credit_pull_events_contract_v1.1(1).json",
-    "credit_pull_events.schema(1).json",
-    "credit_pull_events_contract(1).json",
-    "credit_pull_events.semantic(1).json"
   ]
 }
