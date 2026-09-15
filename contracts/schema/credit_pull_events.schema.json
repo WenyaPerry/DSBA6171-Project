@@ -1,31 +1,90 @@
 {
-  "schema_version": "1.0",
-  "dataset": "credit_pull_events",
-  "primary_key": "credit_pull_event_id",
-  "relationships": [
-    "Links back to applicant_demographics.applicant_id",
-    "Links to loan_products.product_code via product_code reference mapping"
-  ],
-  "columns": [
-    {
-      "column": "credit_pull_event_id",
-      "schema_expectations": "Required string; primary key; unique; not null."
+  "$schema": "Team1_Personal_Loan_Schema",
+  "title": "credit_pull_events",
+  "schema_version": "1.1",
+  "type": "object",
+  "properties": {
+    "credit_pull_event_id": {
+      "type": "string",
+      "pattern": "^EV-[0-9]{3,}$"
     },
-    {
-      "column": "applicant_id",
-      "schema_expectations": "Required string; foreign key referencing applicant_demographics; not null."
+    "applicant_id": {
+      "type": "string"
     },
-    {
-      "column": "credit_score",
-      "schema_expectations": "Required integer; bounded between 300 and 850 for standard models."
+    "product_code": {
+      "type": "string"
     },
-    {
-      "column": "dti_ratio",
-      "schema_expectations": "Required numeric; decimal or percent format; non-negative."
+    "event_date": {
+      "type": "string",
+      "format": "date"
     },
-    {
-      "column": "risk_status",
-      "schema_expectations": "Required string; derived classification mapped from risk_status_criteria."
+    "dti_ratio": {
+      "type": "number",
+      "minimum": 0
+    },
+    "credit_score": {
+      "type": "integer",
+      "minimum": 300,
+      "maximum": 850
+    },
+    "credit_score_tier_change": {
+      "type": "string",
+      "enum": [
+        "Upgraded",
+        "Downgraded",
+        "No Change",
+        "Not Applicable"
+      ]
+    },
+    "pull_status": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "FAILED",
+        "PENDING"
+      ]
+    },
+    "bureau_name": {
+      "type": "string",
+      "enum": [
+        "EQUIFAX",
+        "TRANSUNION",
+        "EXPERIAN"
+      ]
+    },
+    "failure_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "INVALID_REQUEST",
+        "TIMEOUT",
+        "PROVIDER_ERROR",
+        "RATE_LIMITED"
+      ]
+    },
+    "provider_request_id": {
+      "type": "string"
+    },
+    "risk_status": {
+      "type": "string",
+      "enum": [
+        "Low Risk",
+        "Moderate Risk",
+        "High Risk",
+        "Very High Risk"
+      ]
     }
+  },
+  "required": [
+    "credit_pull_event_id",
+    "applicant_id",
+    "product_code",
+    "event_date",
+    "dti_ratio",
+    "pull_status",
+    "provider_request_id",
+    "risk_status"
   ]
 }

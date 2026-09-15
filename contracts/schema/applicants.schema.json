@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "dataset": "applicants",
-  "primary_key": "applicant_id: Acts as the primary logical key linking to third-party credit verification pulls and downstream loan approval routing.",
+  "primary_key": "applicant_id",
   "relationships": [
     "Links to credit_pull_events.applicant_id",
     "Links to loan_applications.applicant_id"
@@ -13,15 +13,31 @@
     },
     {
       "column": "application_date",
-      "schema_expectations": "Required date; YYYY-MM-DD format; not null."
+      "schema_expectations": "Required date (ISO-8601 YYYY-MM-DD); not null."
     },
     {
       "column": "income",
-      "schema_expectations": "Required numeric; non-negative; currency unit USD."
+      "schema_expectations": "Required numeric; non-negative; annual USD."
+    },
+    {
+      "column": "employment_duration",
+      "schema_expectations": "Required integer; months; >=0."
+    },
+    {
+      "column": "credit_score",
+      "schema_expectations": "Integer; 300-850."
+    },
+    {
+      "column": "credit_risk_tier",
+      "schema_expectations": "Derived from approved policy tiers."
     },
     {
       "column": "employment_status",
-      "schema_expectations": "Required string; restricted to specific categorization tags (e.g., EMPLOYED, SELF_EMPLOYED, UNEMPLOYED)."
+      "schema_expectations": "Required string; approved employment categories."
+    },
+    {
+      "column": "state",
+      "schema_expectations": "Two-letter US state abbreviation."
     }
   ]
 }

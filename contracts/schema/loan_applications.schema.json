@@ -1,31 +1,47 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "dataset": "loan_applications",
   "primary_key": "application_id",
   "relationships": [
-    "Links upstream to applicant_demographics.applicant_id",
+    "Links to applicants.applicant_id",
     "Links to loan_products.product_code"
   ],
   "columns": [
     {
       "column": "application_id",
-      "schema_expectations": "Required string; primary key; unique; not null."
+      "schema_expectations": "Required string; PK; unique."
     },
     {
       "column": "applicant_id",
-      "schema_expectations": "Required string; foreign key referencing applicant_demographics; not null."
+      "schema_expectations": "Required FK to applicants."
     },
     {
       "column": "product_code",
-      "schema_expectations": "Required string; foreign key referencing loan_products; not null."
+      "schema_expectations": "Required FK to loan_products."
     },
     {
-      "column": "underwriting_status",
-      "schema_expectations": "Required string; restricted values (e.g., APPROVED, DENIED, REFERRED)."
+      "column": "decision_date",
+      "schema_expectations": "Required ISO date/timestamp."
+    },
+    {
+      "column": "decision_status",
+      "schema_expectations": "Enum: Approved, Denied, Under Review."
     },
     {
       "column": "approved_amount",
-      "schema_expectations": "Conditional numeric; integer; currency unit USD; must not exceed max_amount from the matching product_code."
+      "schema_expectations": "Nullable unless Approved; <= product max."
+    },
+    {
+      "column": "approved_term_length",
+      "schema_expectations": "Nullable unless Approved; valid product term."
+    },
+    {
+      "column": "policy_doc_id",
+      "schema_expectations": "Required policy version identifier."
+    },
+    {
+      "column": "rule_id_triggered",
+      "schema_expectations": "Required when decision rule applied."
     }
   ]
 }

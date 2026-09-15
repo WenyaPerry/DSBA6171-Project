@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.1",
+  "dataset": "loan_products",
+  "primary_key": "product_code",
+  "relationships": [
+    "Referenced by credit_pull_events.product_code",
+    "Referenced by loan_applications.product_code"
+  ],
+  "columns": [
+    {
+      "column": "product_code",
+      "schema_expectations": "Required string; PK; unique."
+    },
+    {
+      "column": "product_name",
+      "schema_expectations": "Required string."
+    },
+    {
+      "column": "risk_status_criteria",
+      "schema_expectations": "Policy-defined risk category."
+    },
+    {
+      "column": "base_rate",
+      "schema_expectations": "Required decimal."
+    },
+    {
+      "column": "max_amount",
+      "schema_expectations": "Required USD amount."
+    },
+    {
+      "column": "min_term_month",
+      "schema_expectations": "Integer >=0."
+    },
+    {
+      "column": "max_term_month",
+      "schema_expectations": "Integer >= min_term_month."
+    },
+    {
+      "column": "max_dti_score",
+      "schema_expectations": "Percentage; non-negative."
+    }
+  ]
+}
