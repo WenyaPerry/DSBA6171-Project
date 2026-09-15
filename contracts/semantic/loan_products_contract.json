@@ -1,0 +1,112 @@
+{
+  "$schema": "https://example.com/semantic-contract-schema.json",
+  "dataset_name": "loan_products.csv",
+  "version": "1.0.0",
+  "dataset_level_description": {
+    "business_purpose": "Defines loan product terms, pricing baseline, risk criteria, amount limits, term limits, and DTI thresholds.",
+    "business_question_supported": "Which product rules apply, and does the applicant meet product-level eligibility limits?",
+    "grain": "One row represents one loan product.",
+    "dataset_type": "Reference/master dataset.",
+    "keys_and_relationships": "Primary key: product_code. Links to credit_pull_events.product_code and loan_applications.product_code.",
+    "storage_and_ingestion": "Stored as a raw reference CSV in GitHub; loaded as rule context for product eligibility checks.",
+    "ai_consumption": "Decision-support reference data for product eligibility, maximum amount, term range, DTI limit, and risk criteria.",
+    "ai_assumption": "Product rules are current, approved, and applied based on the selected product_code."
+  },
+  "column_level_contract": [
+    {
+      "column": "product_code",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "unique": true,
+        "nullable": false,
+        "enum": [
+          "MNT-01",
+          "REV-02",
+          "MNT-03",
+          "MNT-04",
+          "MNT-05",
+          "MNT-06",
+          "MNT-07",
+          "MNT-08",
+          "MNT-09",
+          "MNT-10"
+        ]
+      },
+      "business_meaning": "Unique product identifier used to connect product rules to events and applications."
+    },
+    {
+      "column": "risk_status_criteria",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "enum": [
+          "Low Risk",
+          "Moderate Risk",
+          "High Risk"
+        ]
+      },
+      "business_meaning": "Defines score ranges used to translate credit score into risk status."
+    },
+    {
+      "column": "base_rate",
+      "schema_expectations": {
+        "type": "numeric",
+        "required": true,
+        "non_negative": true,
+        "format": "decimal rate format"
+      },
+      "business_meaning": "Baseline interest rate or pricing reference for the product."
+    },
+    {
+      "column": "max_amount",
+      "schema_expectations": {
+        "type": "numeric/integer",
+        "required": true,
+        "non_negative": true,
+        "unit": "USD"
+      },
+      "business_meaning": "Maximum loan or credit amount allowed for the product."
+    },
+    {
+      "column": "product_name",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false
+      },
+      "business_meaning": "Plain-language name of the product."
+    },
+    {
+      "column": "min_term_month",
+      "schema_expectations": {
+        "type": "integer",
+        "required": true,
+        "min_value": 0,
+        "unit": "months"
+      },
+      "business_meaning": "Minimum allowed repayment term for the product."
+    },
+    {
+      "column": "max_term_month",
+      "schema_expectations": {
+        "type": "integer",
+        "required": true,
+        "unit": "months",
+        "condition": ">= min_term_month"
+      },
+      "business_meaning": "Maximum allowed repayment term for the product."
+    },
+    {
+      "column": "max_dti_score",
+      "schema_expectations": {
+        "type": "numeric",
+        "required": true,
+        "non_negative": true,
+        "unit": "percentage"
+      },
+      "business_meaning": "Maximum DTI threshold used for product eligibility review."
+    }
+  ]
+}

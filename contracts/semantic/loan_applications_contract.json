@@ -1,0 +1,145 @@
+{
+  "$schema": "https://example.com/semantic-contract-schema.json",
+  "dataset_name": "loan_applications.csv",
+  "version": "1.0.0",
+  "dataset_level_description": {
+    "business_purpose": "Records loan application outcomes and links each decision to applicant, product, formal approval bounds, and specific underwriting policies triggered.",
+    "business_question_supported": "Should the application be approved, denied, or escalated, and can the decision be explained by the correct policy and rule?",
+    "grain": "One row represents one record per closed application processing event (application_id).",
+    "dataset_type": "Event/transaction dataset tracking contract lifecycle resolutions.",
+    "keys_and_relationships": "Primary key: application_id linking upstream to applicant_id and utilizing the foreign key. product_code as a reference boundary. Other foreign keys include: applicant_id to track back to demographic and employment history; policy_doc_id and rule_id_triggered that links to the specific documents that give the specified reason for the status.",
+    "storage_and_ingestion": "Stored as a raw CSV in GitHub; loaded and joined to applicant, product, credit, and policy context. Micro-batch pipeline executing multiple times per day to move structured underwriting system logs directly into an analytics layer.",
+    "ai_consumption": "Functions as direct decision-support feedback loops to recalibrate deep learning underwriting thresholds over time.",
+    "ai_assumption": "Assumes all historical fields are immutable and free from manual processing adjustments."
+  },
+  "column_level_contract": [
+    {
+      "column": "application_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "unique": true,
+        "nullable": false,
+        "example": "LA-99998"
+      },
+      "business_meaning": "Unique identifier for one loan application decision record."
+    },
+    {
+      "column": "applicant_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "foreign_key": "applicants.applicant_id"
+      },
+      "business_meaning": "Unique applicant identifier used to connect applicant profile to credit and decision records."
+    },
+    {
+      "column": "product_code",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "foreign_key": "loan_products.product_code",
+        "enum": [
+          "MNT-01",
+          "REV-02",
+          "MNT-03",
+          "MNT-04",
+          "MNT-05",
+          "MNT-06",
+          "MNT-07",
+          "MNT-08",
+          "MNT-09",
+          "MNT-10"
+        ]
+      },
+      "business_meaning": "Identifies the product evaluated for the application."
+    },
+    {
+      "column": "decision_date",
+      "schema_expectations": {
+        "type": "date/timestamp",
+        "required": true,
+        "nullable": false,
+        "format": "standard format preferred"
+      },
+      "business_meaning": "Point-in-time anchor for policy version, credit information, and decision outcome."
+    },
+    {
+      "column": "decision_status",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "enum": [
+          "Approved",
+          "Denied",
+          "Under Review"
+        ]
+      },
+      "business_meaning": "Final or current decision outcome used for approval and fair-lending analysis."
+    },
+    {
+      "column": "approved_amount",
+      "schema_expectations": {
+        "type": "numeric",
+        "required": false,
+        "nullable_conditional": "nullable when not approved",
+        "description": "The approved amount scaled in thousands of USD. Example: 32 = $32,000"
+      },
+      "business_meaning": "Amount approved for the applicant."
+    },
+    {
+      "column": "approved_term_length",
+      "schema_expectations": {
+        "type": "integer",
+        "required": false,
+        "nullable_conditional": "nullable when not approved",
+        "unit": "months",
+        "enum": [
+          24,
+          36,
+          48,
+          60
+        ]
+      },
+      "business_meaning": "Approved repayment term used to compare treatment and product-rule compliance."
+    },
+    {
+      "column": "doc_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "references": "supporting procedure or document metadata"
+      },
+      "business_meaning": "Links the decision record to the supporting procedural document."
+    },
+    {
+      "column": "policy_doc_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "references": "active policy document/version"
+      },
+      "business_meaning": "Identifies the underwriting policy version used for the decision."
+    },
+    {
+      "column": "rule_id_triggered",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "condition": "required when a rule drives the decision"
+      },
+      "business_meaning": "Documents the rule that supported approval, denial, or review."
+    },
+    {
+      "column": "active_flag",
+      "schema_expectations": {
+        "type": "boolean",
+        "required": true,
+        "nullable": false
+      },
+      "business_meaning": "Indicates whether the record is active for current analysis and AI-ready context."
+    }
+  ]
+}

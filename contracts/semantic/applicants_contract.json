@@ -1,0 +1,147 @@
+{
+  "$schema": "https://example.com/semantic-contract-schema.json",
+  "dataset_name": "applicants.csv",
+  "version": "1.0.0",
+  "dataset_level_description": {
+    "business_purpose": "Stores applicant profile and risk information for personal-loan approval and fair-lending review.",
+    "business_question_supported": "Does the applicant meet eligibility requirements, and can similarly situated applicants be compared consistently?",
+    "grain": "One row represents one record per credit application, including the application date and the applicant's financial and demographic attributes at the time of applying.",
+    "dataset_type": "This dataset is an entity tracking the customer profile.",
+    "keys_and_relationships": "Primary key: applicant_id. Acts as the primary logical key linking to third-party credit verification pulls and downstream loan approval routing.",
+    "storage_and_ingestion": "Stored as a raw CSV in GitHub; loaded, validated, and transformed into AI-ready applicant context. Daily batch ingestion using ELT and deduplication handled downstream based on applicant_id.",
+    "ai_consumption": "Current case context and feature/input data for approval, denial, under review, and fair-lending support.",
+    "ai_assumption": "Assumes the applicant's declared income and employment state are verified truths."
+  },
+  "column_level_contract": [
+    {
+      "column": "applicant_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "unique": true,
+        "nullable": false,
+        "example": "AP-10001"
+      },
+      "business_meaning": "Unique applicant identifier used to connect applicant profile to credit and decision records."
+    },
+    {
+      "column": "income",
+      "schema_expectations": {
+        "type": "numeric",
+        "required": true,
+        "nullable": false,
+        "non_negative": true,
+        "unit": "annual USD"
+      },
+      "business_meaning": "Applicant income for repayment-capacity review. Use one canonical unit, preferably annual USD."
+    },
+    {
+      "column": "employment_duration",
+      "schema_expectations": {
+        "type": "integer",
+        "required": true,
+        "nullable": false,
+        "min_value": 0,
+        "unit": "months"
+      },
+      "business_meaning": "Employment length at application time, used as a legitimate stability factor."
+    },
+    {
+      "column": "credit_score",
+      "schema_expectations": {
+        "type": "integer",
+        "required": true,
+        "nullable": false,
+        "valid_range": {
+          "min": 300,
+          "max": 850
+        }
+      },
+      "business_meaning": "Credit score used for applicant risk assessment at or near application time."
+    },
+    {
+      "column": "credit_risk_tier",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "enum": [
+          "Excellent",
+          "Very Good",
+          "Good",
+          "Fair",
+          "Poor"
+        ]
+      },
+      "business_meaning": "Risk category derived from credit score or policy rules; must align with the applicable policy. If tier is 'Poor', application must be escalated to 'Under Review' status."
+    },
+    {
+      "column": "region",
+      "schema_expectations": {
+        "type": "string",
+        "required": false,
+        "enum": [
+          "Midwest",
+          "Northeast",
+          "Northwest",
+          "South",
+          "Southwest"
+        ]
+      },
+      "business_meaning": "Geographic grouping for monitoring and operational analysis, not an unsupported proxy for risk."
+    },
+    {
+      "column": "birth_date",
+      "schema_expectations": {
+        "type": "date",
+        "format": "mm-dd-yyyy",
+        "required": false
+      },
+      "business_meaning": "Used to calculate age as of application date for compliance monitoring. If Today's date minus birth_date is less than 18, then application is 'Denied' status."
+    },
+    {
+      "column": "employment_status",
+      "schema_expectations": {
+        "type": "string",
+        "required": false,
+        "enum": [
+          "employed",
+          "self_employed",
+          "retired"
+        ]
+      },
+      "business_meaning": "Applicant employment category at application time."
+    },
+    {
+      "column": "housing_status",
+      "schema_expectations": {
+        "type": "string",
+        "required": false,
+        "enum": [
+          "rent",
+          "own",
+          "other"
+        ]
+      },
+      "business_meaning": "Housing-related applicant context; current sample values should be checked for possible mismatch."
+    },
+    {
+      "column": "state",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "format": "two-letter state abbreviation"
+      },
+      "business_meaning": "Applicant state for jurisdiction, availability, and geographic monitoring."
+    },
+    {
+      "column": "application_date",
+      "schema_expectations": {
+        "type": "date/timestamp",
+        "required": true,
+        "nullable": false,
+        "format": "standard format preferred"
+      },
+      "business_meaning": "Point-in-time anchor for policy version, and valid credit information."
+    }
+  ]
+}
