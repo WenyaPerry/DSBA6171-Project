@@ -1,0 +1,224 @@
+{
+  "$schema": "https://example.com/semantic-contract-schema.json",
+  "dataset_name": "credit_pull_events.csv",
+  "version": "2.0.0",
+  "dataset_metadata": {
+    "description": "Credit bureau pull events supporting underwriting decisions.",
+    "business_domain": "Consumer Lending",
+    "data_owner": "Loan Operations",
+    "system_of_record": "Credit Bureau Integration Service",
+    "primary_key": "credit_pull_event_id",
+    "dataset_type": "Event",
+    "relationships": [
+      "applicants.applicant_id",
+      "loan_products.product_code"
+    ]
+  },
+  "dataset_level_description": {
+    "business_purpose": "Records third-party credit-bureau integration requests, technical response health, bureau response details, and risk classifications used to reconstruct credit context at decision time.",
+    "business_question_supported": "Was a valid, current, and correctly linked credit pull available for the underwriting decision?",
+    "grain": "One row per unique automated bureau check event, identified by credit_pull_event_id.",
+    "dataset_type": "System event and credit-bureau transaction dataset.",
+    "keys_and_relationships": "Primary key: credit_pull_event_id. Foreign keys: applicant_id maps to applicants.applicant_id and product_code maps to loan_products.product_code.",
+    "storage_and_ingestion": "Validated event records from the Credit Bureau Integration Service are loaded into analytics, with streaming or near-real-time ingestion preferred for external bureau service calls.",
+    "ai_consumption": "Provides point-in-time credit context for underwriting analytics, financial trend analysis, decision reconstruction, and technical failure alerting.",
+    "ai_assumption": "The event date, pull status, credit score, DTI ratio, bureau source, and risk status represent the bureau response available when the underwriting decision was made."
+  },
+  "column_level_contract": [
+    {
+      "column": "credit_pull_event_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "unique": true,
+        "pattern": "^EV-[0-9]{3,}$",
+        "example": "EV-87718"
+      },
+      "business_meaning": "Unique identifier for one lender-initiated credit bureau pull event. It tracks the specific instance of requesting and retrieving an applicant's credit profile."
+    },
+    {
+      "column": "applicant_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "foreign_key": "applicants.applicant_id",
+        "example": "APP-10452"
+      },
+      "business_meaning": "Unique applicant identifier used to connect the credit pull event to the applicant profile and related underwriting decision records."
+    },
+    {
+      "column": "product_code",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "foreign_key": "loan_products.product_code",
+        "example": "PLN-PERSONAL"
+      },
+      "business_meaning": "Loan product associated with the credit pull. It identifies the product context the bureau response supports."
+    },
+    {
+      "column": "event_date",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "format": "date",
+        "standard": "ISO-8601",
+        "example": "2026-09-15"
+      },
+      "business_meaning": "Date of the credit pull, used for point-in-time underwriting reconstruction and to confirm the bureau response was current for the decision."
+    },
+    {
+      "column": "credit_score",
+      "schema_expectations": {
+        "type": "integer",
+        "required": false,
+        "nullable": true,
+        "valid_range": {
+          "min": 300,
+          "max": 850
+        },
+        "required_conditional": "Required when pull_status is SUCCESS.",
+        "example": 724
+      },
+      "business_meaning": "Official point-in-time credit score returned by the bureau for this event. It is used to evaluate applicant creditworthiness and support policy-based eligibility checks."
+    },
+    {
+      "column": "dti_ratio",
+      "schema_expectations": {
+        "type": "number",
+        "required": true,
+        "nullable": false,
+        "valid_range": {
+          "min": 0
+        },
+        "format": "decimal",
+        "example": 32.45
+      },
+      "business_meaning": "Debt-to-income ratio used to evaluate repayment burden and product eligibility. It represents verified bureau-reported or underwriting-supported monthly obligations divided by income."
+    },
+    {
+      "column": "credit_score_tier_change",
+      "schema_expectations": {
+        "type": "string",
+        "required": false,
+        "nullable": true,
+        "enum": [
+          "Upgraded",
+          "Downgraded",
+          "No Change",
+          "Not Applicable"
+        ],
+        "example": "No Change"
+      },
+      "business_meaning": "Indicates whether the applicant's credit-risk tier changed from prior information. A value of Not Applicable means no comparable prior tier was available or tier movement was not evaluated."
+    },
+    {
+      "column": "pull_status",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "enum": [
+          "SUCCESS",
+          "FAILED",
+          "PENDING"
+        ],
+        "example": "SUCCESS"
+      },
+      "business_meaning": "Status of the credit bureau pull. SUCCESS means the response is usable for decision context, FAILED means the pull did not complete successfully, and PENDING means the pull has not reached a final state."
+    },
+    {
+      "column": "bureau_name",
+      "schema_expectations": {
+        "type": "string",
+        "required": false,
+        "nullable": true,
+        "enum": [
+          "EQUIFAX",
+          "TRANSUNION",
+          "EXPERIAN"
+        ],
+        "required_conditional": "Required when pull_status is SUCCESS.",
+        "example": "EQUIFAX"
+      },
+      "business_meaning": "Credit bureau or provider source that returned the credit information for the event."
+    },
+    {
+      "column": "failure_code",
+      "schema_expectations": {
+        "type": "string",
+        "required": false,
+        "nullable": true,
+        "enum": [
+          "INVALID_REQUEST",
+          "TIMEOUT",
+          "PROVIDER_ERROR",
+          "RATE_LIMITED"
+        ],
+        "required_conditional": "Required when pull_status is FAILED; should be null when pull_status is SUCCESS.",
+        "example": "TIMEOUT"
+      },
+      "business_meaning": "Reason a credit pull failed. It explains technical or provider failure context and should not be interpreted as applicant credit risk."
+    },
+    {
+      "column": "provider_request_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "unique": true,
+        "traceable": true,
+        "example": "REQ-9f3c2a71"
+      },
+      "business_meaning": "External provider request identifier used for audit, lineage, troubleshooting, and reconciliation with bureau integration logs."
+    },
+    {
+      "column": "risk_status",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "enum": [
+          "Low Risk",
+          "Moderate Risk",
+          "High Risk",
+          "Very High Risk"
+        ],
+        "example": "Moderate Risk"
+      },
+      "business_meaning": "Policy risk classification for the credit event. It should align to approved credit score, DTI, and underwriting policy rules."
+    }
+  ],
+  "record_level_rules": [
+    {
+      "rule": "credit_score_required_for_success",
+      "description": "credit_score must be present when pull_status is SUCCESS."
+    },
+    {
+      "rule": "bureau_name_required_for_success",
+      "description": "bureau_name must be present when pull_status is SUCCESS."
+    },
+    {
+      "rule": "failure_code_required_for_failure",
+      "description": "failure_code must be present when pull_status is FAILED and should be null for successful pulls."
+    },
+    {
+      "rule": "pending_pull_not_decision_ready",
+      "description": "Records with pull_status PENDING should not be treated as final decision-ready credit context."
+    },
+    {
+      "rule": "risk_status_policy_alignment",
+      "description": "risk_status must be derived from approved underwriting policy logic and remain consistent with credit_score, DTI ratio, and product rules."
+    }
+  ],
+  "source_files_merged": [
+    "credit_pull_events_contract_v1.1(1).json",
+    "credit_pull_events.schema(1).json",
+    "credit_pull_events_contract(1).json",
+    "credit_pull_events.semantic(1).json"
+  ]
+}
