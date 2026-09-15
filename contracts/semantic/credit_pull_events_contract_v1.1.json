@@ -1,0 +1,75 @@
+{
+  "$schema": "https://example.com/semantic-contract-schema.json",
+  "dataset_name": "credit_pull_events.csv",
+  "version": "1.1.0",
+  "dataset_metadata": {
+    "description": "Credit bureau pull events supporting underwriting decisions.",
+    "business_domain": "Consumer Lending",
+    "data_owner": "Loan Operations",
+    "system_of_record": "Credit Bureau Integration Service",
+    "primary_key": "credit_pull_event_id",
+    "dataset_type": "Event",
+    "relationships": [
+      "applicants.applicant_id",
+      "loan_products.product_code"
+    ]
+  },
+  "dataset_level_description": {
+    "business_purpose": "Captures credit bureau responses used during underwriting.",
+    "business_question_supported": "Was a valid credit pull available for the decision?",
+    "grain": "One row per credit pull event.",
+    "storage_and_ingestion": "Validated event records loaded into analytics.",
+    "ai_consumption": "Provides point-in-time credit context.",
+    "ai_assumption": "Represents the bureau response available when the decision was made."
+  },
+  "column_level_contract": [
+    {
+      "column": "credit_pull_event_id",
+      "business_meaning": "Unique credit pull identifier."
+    },
+    {
+      "column": "applicant_id",
+      "business_meaning": "Links to applicant."
+    },
+    {
+      "column": "product_code",
+      "business_meaning": "Associated loan product."
+    },
+    {
+      "column": "event_date",
+      "business_meaning": "Credit pull date (ISO-8601)."
+    },
+    {
+      "column": "credit_score",
+      "business_meaning": "Returned bureau score."
+    },
+    {
+      "column": "dti_ratio",
+      "business_meaning": "Debt-to-income ratio."
+    },
+    {
+      "column": "credit_score_tier_change",
+      "business_meaning": "Upgraded, Downgraded, No Change, or Not Applicable."
+    },
+    {
+      "column": "pull_status",
+      "business_meaning": "SUCCESS, FAILED or PENDING."
+    },
+    {
+      "column": "bureau_name",
+      "business_meaning": "Credit bureau when pull succeeds."
+    },
+    {
+      "column": "failure_code",
+      "business_meaning": "Reason for failed pull."
+    },
+    {
+      "column": "provider_request_id",
+      "business_meaning": "Audit and lineage identifier."
+    },
+    {
+      "column": "risk_status",
+      "business_meaning": "Policy risk classification."
+    }
+  ]
+}

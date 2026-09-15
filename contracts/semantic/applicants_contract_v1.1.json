@@ -1,0 +1,63 @@
+{
+  "$schema": "https://example.com/semantic-contract-schema.json",
+  "dataset_name": "applicants.csv",
+  "version": "1.1.0",
+  "dataset_metadata": {
+    "description": "Applicant profile used for personal loan underwriting.",
+    "business_domain": "Consumer Lending",
+    "data_owner": "Loan Operations",
+    "system_of_record": "Loan Origination System",
+    "primary_key": "applicant_id",
+    "dataset_type": "Entity",
+    "relationships": [
+      "credit_pull_events.applicant_id",
+      "loan_applications.applicant_id"
+    ]
+  },
+  "dataset_level_description": {
+    "business_purpose": "Stores applicant profile and financial attributes used during loan evaluation.",
+    "business_question_supported": "Does the applicant satisfy eligibility requirements?",
+    "grain": "One row per applicant.",
+    "storage_and_ingestion": "Stored as validated CSV and loaded into the analytics platform.",
+    "ai_consumption": "Feature dataset for underwriting and fair-lending analysis.",
+    "ai_assumption": "Represents applicant information available at application time after standard data-quality validation."
+  },
+  "column_level_contract": [
+    {
+      "column": "applicant_id",
+      "business_meaning": "Unique applicant identifier."
+    },
+    {
+      "column": "application_date",
+      "business_meaning": "Application submission date (ISO-8601 YYYY-MM-DD)."
+    },
+    {
+      "column": "income",
+      "business_meaning": "Annual applicant income in USD."
+    },
+    {
+      "column": "employment_duration",
+      "business_meaning": "Employment duration in months."
+    },
+    {
+      "column": "credit_score",
+      "business_meaning": "Credit score (300-850)."
+    },
+    {
+      "column": "credit_risk_tier",
+      "business_meaning": "Policy-derived risk tier."
+    },
+    {
+      "column": "employment_status",
+      "business_meaning": "Employment category."
+    },
+    {
+      "column": "housing_status",
+      "business_meaning": "Housing status at application time."
+    },
+    {
+      "column": "state",
+      "business_meaning": "Two-letter US state."
+    }
+  ]
+}
