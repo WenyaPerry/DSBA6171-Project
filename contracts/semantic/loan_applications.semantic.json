@@ -1,0 +1,33 @@
+{
+  "semantic_version": "1.0",
+  "dataset": "loan_applications",
+  "business_purpose": "Tracks downstream lifecycle state changes, formal approval bounds, and specific underwriting policies triggered.",
+  "business_question_supported": "What was the final decision on the application, what terms were authorized, and which policy rules were violated?",
+  "grain": "One record per closed application processing event (application_id).",
+  "dataset_type": "Event/transaction dataset tracking contract lifecycle resolutions.",
+  "storage_and_ingestion": "Micro-batch pipeline executing every fifteen minutes to move structured underwriting system logs directly into an analytics layer.",
+  "ai_consumption": "Functions as direct decision-support feedback loops to recalibrate deep learning underwriting thresholds over time.",
+  "ai_assumption": "Assumes all historical fields are immutable and free from retrospective manual processing adjustments.",
+  "columns": [
+    {
+      "column": "application_id",
+      "business_meaning": "Unique contract or file identifier indicating a finalized underwriting lifecycle step."
+    },
+    {
+      "column": "applicant_id",
+      "business_meaning": "The cross-reference key identifying the individual applicant bound to this specific underwriting determination."
+    },
+    {
+      "column": "product_code",
+      "business_meaning": "The specific loan configuration framework applied to this transaction evaluation."
+    },
+    {
+      "column": "underwriting_status",
+      "business_meaning": "The ultimate outcome or state of the contract parsing through the credit policy rules engine."
+    },
+    {
+      "column": "approved_amount",
+      "business_meaning": "The authorized capital amount extended to the consumer, capped strictly by product configurations."
+    }
+  ]
+}

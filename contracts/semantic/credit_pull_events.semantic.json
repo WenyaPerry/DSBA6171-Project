@@ -1,0 +1,33 @@
+{
+  "semantic_version": "1.0",
+  "dataset": "credit_pull_events",
+  "business_purpose": "Records third-party credit bureau integration requests, technical response health, and raw algorithmic risk classifications.",
+  "business_question_supported": "Did the third-party credit pull complete successfully, and what was the retrieved score/risk status?",
+  "grain": "One record per unique automated bureau check event (credit_pull_event_id).",
+  "dataset_type": "System event and logging transaction dataset.",
+  "storage_and_ingestion": "Streaming architecture using event brokers to parse and store external service calls into an analytical datastore instantly.",
+  "ai_consumption": "Leveraged as critical historical context to capture financial trend lines and flag technical failure alerts.",
+  "ai_assumption": "Assumes the external credit bureau API returned a complete profile within normal timeout windows.",
+  "columns": [
+    {
+      "column": "credit_pull_event_id",
+      "business_meaning": "A unique, trackable instance of a lender requesting and retrieving a consumer's credit profile from a credit bureau."
+    },
+    {
+      "column": "applicant_id",
+      "business_meaning": "Identifies which specific applicant the third-party credit check was initiated for."
+    },
+    {
+      "column": "credit_score",
+      "business_meaning": "The official point-in-time bureau risk rating snapshot used for automated eligibility checks."
+    },
+    {
+      "column": "dti_ratio",
+      "business_meaning": "Debt-to-Income ratio calculated using verified bureau-reported monthly obligations divided by stated income."
+    },
+    {
+      "column": "risk_status",
+      "business_meaning": "The operational risk tier (e.g., LOW, MEDIUM, HIGH) translated from the base score ranges."
+    }
+  ]
+}
