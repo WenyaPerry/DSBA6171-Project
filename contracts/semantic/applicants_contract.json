@@ -157,3 +157,12 @@
     }
   ]
 }
+"record_level_rules": [
+    "applicant_id must be unique and must resolve across related credit_pull_events and loan_applications records when those records exist.",
+    "income, employment_duration, and credit_score must satisfy their non-negative or bounded validation rules.",
+    "credit_risk_tier must align with the applicable approved credit-score policy.",
+    "Applicants under 18 years old as of application_date must have a Denied loan application status.",
+    "An applicant with a Poor credit_risk_tier must be escalated to an Under Review loan application status.",
+    "region, birth_date, and housing_status are monitoring or contextual fields and must not be used as unsupported proxies for credit risk."
+  ]
+}
