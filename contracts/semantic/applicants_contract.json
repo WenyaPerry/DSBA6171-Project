@@ -2,6 +2,18 @@
   "$schema": "https://example.com/semantic-contract-schema.json",
   "dataset_name": "applicants.csv",
   "version": "1.0.0",
+   "dataset_metadata": {
+    "description": "Applicant profile and financial attributes used for personal-loan underwriting and fair-lending analysis.",
+    "business_domain": "Consumer Lending",
+    "data_owner": "Loan Operations",
+    "system_of_record": "Loan Origination System",
+    "primary_key": "applicant_id",
+    "dataset_type": "Entity/transaction",
+    "relationships": [
+      "credit_pull_events.applicant_id",
+      "loan_applications.applicant_id"
+    ]
+  },
   "dataset_level_description": {
     "business_purpose": "Stores applicant profile and risk information for personal-loan approval and fair-lending review.",
     "business_question_supported": "Does the applicant meet eligibility requirements, and can similarly situated applicants be compared consistently?",
