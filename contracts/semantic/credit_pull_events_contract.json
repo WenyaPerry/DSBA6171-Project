@@ -2,6 +2,18 @@
   "$schema": "https://example.com/semantic-contract-schema.json",
   "dataset_name": "credit_pull_events.csv",
   "version": "1.0.0",
+  "dataset_metadata": {
+    "description": "Credit bureau pull events supporting underwriting decisions.",
+    "business_domain": "Consumer Lending",
+    "data_owner": "Loan Operations",
+    "system_of_record": "Credit Bureau Integration Service",
+    "primary_key": "credit_pull_event_id",
+    "dataset_type": "Event",
+    "relationships": [
+      "applicants.applicant_id",
+      "loan_products.product_code"
+    ]
+  },
   "dataset_level_description": {
     "business_purpose": "Records third-party credit-bureau integration requests, technical response health, and risk classifications used to reconstruct credit context at decision time.",
     "business_question_supported": "Was the credit information used for the decision valid, current, and tied to the correct applicant and product?",
