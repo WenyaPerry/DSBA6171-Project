@@ -2,6 +2,18 @@
   "$schema": "https://example.com/semantic-contract-schema.json",
   "dataset_name": "loan_products.csv",
   "version": "1.0.0",
+   "dataset_metadata": {
+    "description": "Reference data defining loan product eligibility rules, pricing baselines, limits, and risk criteria.",
+    "business_domain": "Consumer Lending",
+    "data_owner": "Product Management",
+    "system_of_record": "Product Catalog",
+    "primary_key": "product_code",
+    "dataset_type": "Reference/master",
+    "relationships": [
+      "loan_applications.product_code",
+      "credit_pull_events.product_code"
+    ]
+  },
   "dataset_level_description": {
     "business_purpose": "Defines loan product terms, pricing baseline, risk criteria, amount limits, term limits, and DTI thresholds.",
     "business_question_supported": "Which product rules apply, and does the applicant meet product-level eligibility limits?",
