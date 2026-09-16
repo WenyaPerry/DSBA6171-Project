@@ -2,6 +2,20 @@
   "$schema": "https://example.com/semantic-contract-schema.json",
   "dataset_name": "loan_applications.csv",
   "version": "1.0.0",
+   "dataset_metadata": {
+    "description": "Loan application outcomes, authorized terms, and underwriting policy evidence.",
+    "business_domain": "Consumer Lending",
+    "data_owner": "Loan Operations",
+    "system_of_record": "Loan Origination System",
+    "primary_key": "application_id",
+    "dataset_type": "Event/transaction",
+    "relationships": [
+      "applicants.applicant_id",
+      "loan_products.product_code",
+      "policy_documents.policy_doc_id",
+      "underwriting_rules.rule_id"
+    ]
+  },
   "dataset_level_description": {
     "business_purpose": "Records loan application outcomes and links each decision to applicant, product, formal approval bounds, and specific underwriting policies triggered.",
     "business_question_supported": "Should the application be approved, denied, or escalated, and can the decision be explained by the correct policy and rule?",
