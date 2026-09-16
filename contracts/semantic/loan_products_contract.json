@@ -121,4 +121,11 @@
       "business_meaning": "Maximum DTI threshold used for product eligibility review."
     }
   ]
+},
+ "record_level_rules": [
+    "product_code must be unique and present in the approved product catalog.",
+    "min_term_month must be less than or equal to max_term_month.",
+    "base_rate, max_amount, and max_dti_ratio must be non-negative.",
+    "Product references in loan_applications and credit_pull_events must resolve to product_code."
+  ]
 }
