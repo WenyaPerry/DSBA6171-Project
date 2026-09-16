@@ -156,4 +156,11 @@
       "business_meaning": "Indicates whether the record is active for current analysis and AI-ready context."
     }
   ]
+},
+"record_level_rules": [
+    "application_id must be unique.",
+    "approved_amount and approved_term_length must be populated when decision_status is Approved.",
+    "approved_amount and approved_term_length should be null when decision_status is Denied or Under Review.",
+    "policy_doc_id and rule_id_triggered must identify the policy evidence supporting the decision."
+  ]
 }
