@@ -166,3 +166,26 @@
     }
   ]
 }
+ "record_level_rules": [
+    {
+      "rule": "credit_score_required_for_success",
+      "description": "credit_score must be present when pull_status is SUCCESS."
+    },
+    {
+      "rule": "bureau_name_required_for_success",
+      "description": "bureau_name must be present when pull_status is SUCCESS."
+    },
+    {
+      "rule": "failure_code_required_for_failure",
+      "description": "failure_code must be present when pull_status is FAILED and should be null for successful pulls."
+    },
+    {
+      "rule": "pending_pull_not_decision_ready",
+      "description": "Records with pull_status PENDING should not be treated as final decision-ready credit context."
+    },
+    {
+      "rule": "risk_status_policy_alignment",
+      "description": "risk_status must be derived from approved underwriting policy logic and remain consistent with credit_score, DTI ratio, and product rules."
+    }
+  ]
+}
