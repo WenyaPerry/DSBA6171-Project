@@ -72,9 +72,9 @@
         "type": "numeric",
         "required": true,
         "non_negative": true,
-        "format": "decimal (5, 2)"
+        "format": "decimal (4, 2)"
       },
-      "business_meaning": "Debt-to-income measure used to evaluate repayment burden and product eligibility. A decimal in 00.00 format that represents a percentage. Maximum is 43.00, and automatic status of 'Denied'."
+      "business_meaning": "Debt-to-income measure used to evaluate repayment burden and product eligibility. A decimal in 00.00 format that represents a percentage. Example: 43.15 is 43.15%. Maximum is 43.00, and automatic status of 'Denied'."
     },
     {
       "column": "credit_score",
