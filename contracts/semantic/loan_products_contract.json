@@ -114,12 +114,13 @@
     {
       "column": "max_dti_score",
       "schema_expectations": {
-        "type": "numeric", "decimal(6,4)"
+        "type": "numeric", 
         "required": true,
         "non_negative": true,
+        "format": decimal(4,2)
         "unit": "percentage"
       },
-      "business_meaning": "Maximum DTI threshold used for product eligibility review. Percentage written as a decimal. Example, 0.0145 is equal to 1.45%"
+      "business_meaning": "Maximum DTI threshold used for product eligibility review. Percentage written as a decimal. Example, 43.15  is equal to 43.15%"
     }
   ]
 },
