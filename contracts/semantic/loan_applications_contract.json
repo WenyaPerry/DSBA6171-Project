@@ -76,7 +76,7 @@
         "type": "date/timestamp",
         "required": true,
         "nullable": false,
-        "format": "standard format preferred"
+        "format": "standard format"
       },
       "business_meaning": "Point-in-time anchor for policy version, credit information, and decision outcome."
     },
