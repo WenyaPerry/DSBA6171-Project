@@ -67,14 +67,14 @@
         "type": "numeric",
         "required": true,
         "non_negative": true,
-        "format": "decimal rate format"
+        "format": "decimal(6,4)"
       },
       "business_meaning": "Baseline interest rate or pricing reference for the product."
     },
     {
       "column": "max_amount",
       "schema_expectations": {
-        "type": "numeric/integer",
+        "type": "numeric",
         "required": true,
         "non_negative": true,
         "unit": "USD"
@@ -93,9 +93,9 @@
     {
       "column": "min_term_month",
       "schema_expectations": {
-        "type": "integer",
+        "type": "numeric",
         "required": true,
-        "min_value": 0,
+        "min_value": 24,
         "unit": "months"
       },
       "business_meaning": "Minimum allowed repayment term for the product."
@@ -103,22 +103,23 @@
     {
       "column": "max_term_month",
       "schema_expectations": {
-        "type": "integer",
+        "type": "numeric",
         "required": true,
         "unit": "months",
-        "condition": ">= min_term_month"
+        "condition": ">= min_term_month",
+        "max_value": 60
       },
       "business_meaning": "Maximum allowed repayment term for the product."
     },
     {
       "column": "max_dti_score",
       "schema_expectations": {
-        "type": "numeric",
+        "type": "numeric", "decimal(6,4)"
         "required": true,
         "non_negative": true,
         "unit": "percentage"
       },
-      "business_meaning": "Maximum DTI threshold used for product eligibility review."
+      "business_meaning": "Maximum DTI threshold used for product eligibility review. Percentage written as a decimal. Example, 0.0145 is equal to 1.45%"
     }
   ]
 },
