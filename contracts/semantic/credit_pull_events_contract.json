@@ -62,7 +62,7 @@
         "type": "date/timestamp",
         "required": true,
         "nullable": false,
-        "format": "standard format preferred"
+        "format": "standard format"
       },
       "business_meaning": "Date and time of the credit pull; used for point-in-time decision reconstruction."
     },
@@ -74,7 +74,7 @@
         "non_negative": true,
         "format": "decimal (5, 2)"
       },
-      "business_meaning": "Debt-to-income measure used to evaluate repayment burden and product eligibility. A decimal in 00.00 format that represents a percentage. Maximum is 43.00, or automatic status of 'Denied'."
+      "business_meaning": "Debt-to-income measure used to evaluate repayment burden and product eligibility. A decimal in 00.00 format that represents a percentage. Maximum is 43.00, and automatic status of 'Denied'."
     },
     {
       "column": "credit_score",
@@ -101,7 +101,7 @@
           "Not Applicable"
         ]
       },
-      "business_meaning": "Indicates whether the applicant risk tier changed from prior information. If value of 'Not Applicable', then automatic status of 'Under Review'."
+      "business_meaning": "Indicates whether the applicant risk tier changed from application timestamp on applicants table. If value of 'Not Applicable', then automatic status of 'Under Review'."
     },
     {
       "column": "pull_status",
