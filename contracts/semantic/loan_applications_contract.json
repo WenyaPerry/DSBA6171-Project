@@ -157,6 +157,22 @@
     }
   ]
 },
+{
+  "constraint_name": "one_applicant_per_application",
+  "constraint_type": "cardinality",
+  "relationship": "loan_application_to_applicant",
+  "rule": {
+    "min_applicants_per_application": 1,
+    "max_applicants_per_application": 1,
+    "co_applicant_allowed": false
+  },
+  "description": "Each loan application must be associated with exactly one applicant. Co-applicants, joint applicants, or multiple applicants associated with the same application_id are not permitted.",
+  "validation": {
+    "group_by": "application_id",
+    "expected_applicant_count": 1,
+    "violation_condition": "COUNT(DISTINCT applicant_id) != 1"
+  }
+},
 "record_level_rules": [
     "application_id must be unique.",
     "approved_amount and approved_term_length must be populated when decision_status is Approved.",
