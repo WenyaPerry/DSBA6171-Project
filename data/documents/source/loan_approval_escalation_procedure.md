@@ -20,9 +20,11 @@
 
 This procedure defines the operational steps for reviewing a personal lending application and assigning one of the decision statuses permitted by the structured data:
 
-- `Approved`
-- `Denied`
-- `Under Review`
+- `Under Review: Application was submitted and under review by the company`
+-  `Approved: Company has approved the application and is in the process of disbursing the funds `
+- `Denied: Company has denied the application and will not disburse funds and states reason why application was denied`
+- `Pending: Company needs more information from applicant who filled out application in order to decide if the application is approved or denied`
+- `Funded: Company approved the application and funds were disbursed`
 
 It is designed to answer the following primary business question:
 
