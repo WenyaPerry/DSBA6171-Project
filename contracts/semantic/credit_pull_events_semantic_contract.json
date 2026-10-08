@@ -17,10 +17,6 @@
         {
           "column": "application_id",
           "description": "Links the event to the loan application."
-        },
-        {
-          "column": "product_code",
-          "description": "Links the event to the product applied for."
         }
       ]
     },
