@@ -1,0 +1,180 @@
+{
+  "dataset": "credit_pull_events.csv",
+  "level_1_dataset_description": {
+    "business_purpose": "Records third-party credit-bureau integration requests, technical response health, and risk-classification used to reconstruct credit event decision timelines.",
+    "business_question_supported": "Was the credit information used for the decision valid, current, and tied to the correct applicant and product?",
+    "grain": "One row represents one record per unique automated bureau check event (credit_pull_event_id).",
+    "dataset_type": "Event/transaction dataset.",
+    "keys_and_relationships": {
+      "primary_key": "credit_pull_event_id",
+      "description": "Primary key; credit_pull_event_id maps back to the applicant through applicant_id.",
+      "foreign_keys": [
+        {
+          "column": "applicant_id",
+          "references": "applicants.csv.applicant_id",
+          "description": "Links the event to the applicant."
+        },
+        {
+          "column": "application_id",
+          "description": "Links the event to the loan application."
+        },
+        {
+          "column": "product_code",
+          "description": "Links the event to the product applied for."
+        }
+      ]
+    },
+    "storage_and_ingestion": "Stored as a raw CSV in GitHub; loaded and filtered for successful, relevant, point-in-time credit events. Streaming architecture using event brokers to parse and store external service calls internally into a data warehouse.",
+    "ai_consumption": "Historical credit context to capture financial trends and flag technical failure alerts.",
+    "ai_assumption": "The event date, pull value, score, DTI, and risk status reflect the correct credit event available within normal timeout windows."
+  },
+  "level_2_column_semantic_contract": [
+    {
+      "column": "credit_pull_event_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "primary_key": true,
+        "unique": true,
+        "nullable": false,
+        "example": "EV-87118"
+      },
+      "semantic_contract_business_meaning": "Unique identifier that tracks the instance of a lender's credit profile from a credit bureau."
+    },
+    {
+      "column": "application_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "foreign_key": true,
+        "nullable": false,
+        "example": "APP-2026-00984"
+      },
+      "semantic_contract_business_meaning": "Unique application identifier used to connect applicant profile to application and credit event records. Should include the year of the application_date from the loan_applications table"
+    },
+    {
+      "column": "product_code",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "foreign_key": true,
+        "nullable": false,
+        "enum": [
+          "MNT-01",
+          "REV-02"
+        ]
+      },
+      "semantic_contract_business_meaning": "Identifies which loan product contained the credit pull request."
+    },
+    {
+      "column": "event_date",
+      "schema_expectations": {
+        "type": "datetime",
+        "required": true,
+        "nullable": false,
+        "format": "standard ISO 8601 preferred"
+      },
+      "semantic_contract_business_meaning": "Date and time of the credit pull; used for point-in-time decision reconstruction."
+    },
+    {
+      "column": "dti_ratio",
+      "schema_expectations": {
+        "type": "numeric",
+        "required": true,
+        "nullable": false,
+        "minimum": 0,
+        "precision": 5,
+        "scale": 2
+      },
+      "semantic_contract_business_meaning": "Debt-to-income measure used to evaluate repayment burden and product eligibility. A DTI above 43.00 for formal rule responses is percentage-based. Maximum is 43.00, or automatic status of Denied."
+    },
+    {
+      "column": "credit_score",
+      "schema_expectations": {
+        "type": "integer",
+        "nullable": false,
+        "minimum": 300,
+        "maximum": 850,
+        "required_when": "pull_status == SUCCESS"
+      },
+      "semantic_contract_business_meaning": "Credit score returned by the bureau for this event. Evaluates creditworthiness of applicants. Valid range is 300-850."
+    },
+    {
+      "column": "credit_score_tier_change",
+      "schema_expectations": {
+        "type": "string",
+        "nullable": false,
+        "enum": [
+          "No_Change",
+          "Upgraded",
+          "Downgraded",
+          "Not_Applicable"
+        ],
+        "required": true
+      },
+      "semantic_contract_business_meaning": "Indicates whether the applicant's risk tier changed from prior information. Values of Not_Applicable, then automatic status of Under Review."
+    },
+    {
+      "column": "pull_status",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "enum": [
+          "SUCCESS",
+          "FAILED",
+          "PENDING"
+        ]
+      },
+      "semantic_contract_business_meaning": "Shows whether the credit pull result is usable for decision context. If FAILED, then must have another credit pull and an alert triggered."
+    },
+    {
+      "column": "bureau_name",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "enum": [
+          "EQUIFAX",
+          "TRANSUNION",
+          "EXPERIAN"
+        ]
+      },
+      "semantic_contract_business_meaning": "Identifies the credit bureau or provider source."
+    },
+    {
+      "column": "failure_code",
+      "schema_expectations": {
+        "type": "string",
+        "nullable": true,
+        "required_when": "pull_status == FAILED"
+      },
+      "semantic_contract_business_meaning": "Explains why a pull failed. Must not be treated as a credit-risk score. Should trigger an alert to be run again."
+    },
+    {
+      "column": "provider_request_id",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "unique_or_traceable": true
+      },
+      "semantic_contract_business_meaning": "External provider request identifier for audit and lineage."
+    },
+    {
+      "column": "risk_status",
+      "schema_expectations": {
+        "type": "string",
+        "required": true,
+        "nullable": false,
+        "enum": [
+          "Low Risk",
+          "Moderate Risk",
+          "High Risk",
+          "Very High Risk"
+        ]
+      },
+      "semantic_contract_business_meaning": "Risk classification for this credit event; must be tied to event data and policy rules, not credit-score values alone. Very High Risk status must be Denied."
+    }
+  ]
+}

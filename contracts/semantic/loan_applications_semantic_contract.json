@@ -1,0 +1,157 @@
+{
+    "level_1_dataset_level_description": {
+        "business_purpose": "Records loan application outcomes and links each decision to applicant, product, formal approval bounds, and specific underwriting policies triggered.",
+        "business_question_supported": "Should the application be approved, denied, or escalated, and can the decision be explained by the correct policy and rule?",
+        "grain": "One row represents one record per closed application processing event (application_id).",
+        "dataset_type": "Event/transaction dataset tracking contract lifecycle resolutions.",
+        "keys_and_relationships": "Primary key: application_id linking upstream to applicant_id and utilizing the foreign key, product_code, as a reference boundary. Other foreign keys include: applicant_id to track back to demographic and employment history, policy_doc_id and rule_id_triggered that links to the specific documents that give the specified reason for the status.",
+        "storage_and_ingestion": "Stored as a new CSV in GitHub; loaded and joined to applicant, product, credit, and policy context. Micro-batch pipeline executing multiple times per day to move structured underwriting system logs directly into an analytics layer.",
+        "ai_consumption": "Functions as direct decision-support feedback loops to recalibrate deep learning underwriting thresholds over time.",
+        "ai_assumption": "Assumes all historical fields are immutable and free from manual processing adjustments."
+    },
+    "level_2_column_level_semantic_contract": [
+        {
+            "column": "application_id",
+            "schema_expectations": {
+                "type": "string",
+                "required": true,
+                "primary_key": true,
+                "unique": true,
+                "nullable": false,
+                "example": "APP-2026-00984" 
+            },
+            "semantic_contract_business_meaning": "Unique identifier for one loan application decision record. Uses year of application_date to ensure uniqueness and traceability."
+        },
+        {
+            "column": "application_date",
+            "schema_expectations": {
+                "type": "date/timestamp",
+                "required": true,
+                "nullable": false,
+                "format_preferred": "standard"
+            },
+            "semantic_contract_business_meaning": "Point-in-time anchor for policy version, and valid credit information."
+        },
+        {
+            "column": "applicant_id",
+            "schema_expectations": {
+                "type": "string",
+                "required": true,
+                "nullable": false,
+                "foreign_key": "applicant.applicant_id",
+                "example": "AP-10001"
+            },
+            "semantic_contract_business_meaning": "Unique applicant identifier used to connect applicant profile to credit and decision records."
+        },
+        {
+            "column": "product_code",
+            "schema_expectations": {
+                "type": "string",
+                "required": true,
+                "nullable": false,
+                "foreign_key": "loan_products.product_code",
+                "enum": [
+                    "MN1-01",
+                    "REV-02"
+                ]
+            },
+            "semantic_contract_business_meaning": "Identifies the product evaluated for the application."
+        },
+        {
+            "column": "decision_date",
+            "schema_expectations": {
+                "type": "date/timestamp",
+                "required": true,
+                "nullable": false,
+                "format_preferred": "standard"
+            },
+            "semantic_contract_business_meaning": "Point-in-time anchor for policy version, credit information, and decision outcome."
+        },
+        {
+            "column": "decision_status",
+            "schema_expectations": {
+                "type": "string",
+                "required": true,
+                "enum": [
+                    "Pending",
+                    "Approved",
+                    "Funded",
+                    "Denied",
+                    "Under Review"
+                ]
+            },
+            "semantic_contract_business_meaning": "Final or current decision outcome used for approval and fair-lending analysis. Pending means waiting for an applicant's signature and/or submission of documents. Funded means approved and funds have been dispersed. Under Review is escalated for manual review."
+        },
+        {
+            "column": "approved_amount",
+            "schema_expectations": {
+                "type": "numeric",
+                "nullable_when_not_approved": true,
+                "description": "The approved amount scaled in thousands of USD. Example: 32 = $32,000"
+            },
+            "semantic_contract_business_meaning": "Amount approved for the applicant."
+        },
+        {
+            "column": "approved_term_length",
+            "schema_expectations": {
+                "type": "integer",
+                "nullable_when_not_approved": true,
+                "unit": "months",
+                "enum": [
+                    24,
+                    36,
+                    48,
+                    60
+                ]
+            },
+            "semantic_contract_business_meaning": "Approved repayment term used to compare treatment and product-rule compliance."
+        },
+        {
+            "column": "doc_id",
+            "schema_expectations": {
+                "type": "string",
+                "required": true,
+                "references": "supporting procedure or document metadata"
+            },
+            "semantic_contract_business_meaning": "Links the decision record to the supporting procedural document."
+        },
+        {
+            "column": "policy_doc_id",
+            "schema_expectations": {
+                "type": "string",
+                "required": true,
+                "references": "active policy document/vendor"
+            },
+            "semantic_contract_business_meaning": "Identifies the underwriting policy version used for the decision."
+        },
+        {
+            "column": "doc_version_id",
+            "schema_expectations": {
+                "type": "string",
+                "required": true
+            },
+            "semantic_contract_business_meaning": "Gives the version control number of the policy and whether it is superseded in relation to the application_date."
+        },
+        {
+            "column": "rule_id_triggered",
+            "schema_expectations": {
+                "type": "string",
+                "required_conditional": "when a rule drives the decision"
+            },
+            "semantic_contract_business_meaning": "Documents the rule that supported approval, denial, or review."
+        },
+        {
+            "column": "status",
+            "schema_expectations": {
+                "type": "string",
+                "required": true,
+                "nullable": false,
+                "enum": [
+                    "Active",
+                    "Inactive"
+                ]
+            },
+            "semantic_contract_business_meaning": "Indicates whether the record is active for current analysis and AI-ready context. Active = Decision Status is \"Approved\" or \"Funded\". Inactive = Decision Status is \"Denied\" AND application_date is greater than or equal to 6 months."
+        }
+    ]
+}
