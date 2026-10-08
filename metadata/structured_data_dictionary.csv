@@ -11,7 +11,6 @@ Applicants Dataset,housing_status,VARCHAR(20),No,,,TRUE,"Legal nature of residen
 Applicants Dataset,state,CHAR(2),No,,,TRUE,"Applicant's state abbreviation (e.g., 'NC')."
 Credit Pull Events Dataset,credit_pull_event_id,VARCHAR(50),No,PK,,TRUE,"Unique identifier for each individual transaction event (e.g., EV-10001)."
 Credit Pull Events Dataset,application_id,VARCHAR(50),No,FK,,TRUE,Each credit pull is tied to a specific application and an applicant may have multiple applications.
-Credit Pull Events Dataset,product_code,VARCHAR(20),No,FK,,TRUE,Product Code for the loan the applicant is applying for.
 Credit Pull Events Dataset,event_date,TIMESTAMP,No,,CURRENT_DATE,TRUE,Timestamp of when the credit pull event was executed.
 Credit Pull Events Dataset,dti_ratio,"DECIMAL(5,2)",Yes,,,TRUE,Debt to income ratio at time of credit pull.
 Credit Pull Events Dataset,credit_score,INT,Yes,,,TRUE,Score returned by bureau. Validation: Must be between 300 and 850. Can be null if pull failed.
