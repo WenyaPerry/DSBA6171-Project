@@ -8,7 +8,7 @@
 **Owner:** Consumer Lending Risk Management
 **Effective Date:** January 1, 2025
 **Version:** 2.0
-**Authority Status:** CURRENT
+**Authority Status:** Superceded
 **Jurisdiction/Region:** United States
 **Confidentiality:** Internal
 **Access Group:** Lending, Risk, Compliance, and Audit Teams
@@ -183,9 +183,11 @@ The reviewer must document the reason for manual review and the evidence used to
 
 # 10. Policy Version Control
 
-The current policy is **Version 2.0**, effective January 1, 2026.
+The current policy is **Version 3.0**, effective January 1, 2026.
 
-The previous version, **Version 1.0**, became superseded when Version 2.0 became effective.
+The previous version, **Version 2.0**, became superseded when Version 3.0 became effective.
+Version 1.0 was superseded when Version 2.0 became effective.
+Superseded Date: January 1, 2026
 
 The system must use the policy's:
 
@@ -206,4 +208,4 @@ The following documents provide additional information used during loan review:
 * FIN-COMP-001 — Fair-Lending Review Memo
 * FIN-POL-001-OLD — Internal Loan Underwriting Policy, Version 1.0
 
-**Document Status:** CURRENT
+**Document Status:** Superceded
