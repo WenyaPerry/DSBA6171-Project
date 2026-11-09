@@ -105,7 +105,7 @@ The applicant should have at least **12 months** with the current employer for a
 
 ### 6.1 Credit Score and Risk Mapping
 
-The decision score must come from the qualifying record in `credit_pull_events.credit_score`. The system must use the following Version 2.0 mapping:
+The decision score must come from the qualifying record in `credit_pull_events.credit_score`. The system must use the following mapping:
 
 | Credit Score | Applicant Credit Tier | Credit-Pull Risk Status |
 |---:|---|---|
