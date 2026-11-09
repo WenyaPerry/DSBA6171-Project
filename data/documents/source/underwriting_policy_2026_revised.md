@@ -288,10 +288,11 @@ Data corrections must preserve the original value, corrected value, correction d
 
 | Version | Status | Effective Period | Summary |
 |---|---|---|---|
-| 1.0 | SUPERSEDED | Historical period before January 1, 2026 | Prior personal-loan underwriting requirements |
-| 2.0 | CURRENT | January 1, 2026 onward | Personal-loan-only scope, structured-data mapping, traceability rules, and fair-lending controls |
+| 1.0 | SUPERSEDED | Historical period before January 1, 2025 | Prior personal-loan underwriting requirements |
+| 2.0 | SUPERSEDED| January 1, 2025 to December 31, 2025 | Personal-loan-only scope, structured-data mapping, traceability rules, and fair-lending controls |
+| 3.0	| CURRENT |	January 1, 2026 onward
 
 ---
 
-**Document Status:** CURRENT  
+**Document Status:** CURRENT 
 **End of Synthetic Internal Document**
