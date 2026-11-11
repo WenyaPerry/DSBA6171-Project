@@ -1,0 +1,277 @@
+{
+  "name": "A3_Improved_Retest - Python Code Nodes",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        -60
+      ],
+      "id": "bcfdb219-27d9-419c-9bc6-dfe4ba27d22c",
+      "name": "When clicking Execute workflow"
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/WenyaPerry/DSBA6171-Project/git/trees/feature-integration?recursive=1",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        100,
+        -60
+      ],
+      "id": "c50dba42-19b1-4b70-975b-432e8fdbec80",
+      "name": "List GitHub Documents"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "\n# DSBA 6171 - Selected documents for chunking experiment\n\nselected = [\n    \"underwriting_policy_2024_superseded.md\",\n    \"underwriting_policy_2026_superseded.md\",\n    \"underwriting_policy_2026_revised.md\",\n    \"DOC-001-CFPB_AI_Adverse_Action_Circular_2023-03.pdf\",\n    \"loan_approval_escalation_procedure.md\"\n]\n\nitems = _input.all()\npayload = items[0].json.to_py()\ntree = payload[\"tree\"]\n\nfiles = []\n\nfor entry in tree:\n    path = entry[\"path\"]\n    filename = path.rsplit(\"/\", 1)[-1]\n\n    if (\n        entry[\"type\"] == \"blob\"\n        and path.startswith(\"data/documents/source/\")\n        and filename in selected\n    ):\n        files.append({\n            \"path\": path,\n            \"sha\": entry[\"sha\"]\n        })\n\nfiles.sort(key=lambda x: x[\"path\"])\n\nif len(files) != 5:\n    raise ValueError(\n        \"Expected 5 documents, found \" + str(len(files))\n    )\n\nreturn [{\n    \"json\": {\n        \"files\": files,\n        \"embed\": True,\n        \"chunk_size\": 800,\n        \"chunk_overlap\": 100,\n        \"document_count\": len(files)\n    }\n}]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        340,
+        -60
+      ],
+      "id": "3b5f825f-a6a0-43de-801d-17ab5afb2bac",
+      "name": "Build Document Manifest - Python Beta"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8766/ingest",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  files: $json.files,\n  embed: $json.embed,\n  chunk_size: $json.chunk_size,\n  chunk_overlap: $json.chunk_overlap\n}) }}\n",
+        "options": {
+          "timeout": 1800000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        560,
+        -60
+      ],
+      "id": "4552ae4d-8ff1-4ab4-9453-95e6b587924e",
+      "name": "Ingest and Embed Documents"
+    },
+    {
+      "parameters": {
+        "url": "http://127.0.0.1:8766/chunks",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        760,
+        -60
+      ],
+      "id": "10d08a90-d248-4e03-8128-47f7854ea186",
+      "name": "Preview Chunk Metadata"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Python (Beta/Pyodide) — preserve the original chunk metadata projection.\nresponse = _input.first().json.to_py()\nchunks = response.get(\"chunks\") or []\nfields = [\n    \"chunk_id\", \"doc_id\", \"source_path\", \"version\",\n    \"authority_status\", \"effective_date\", \"chunk_index\",\n    \"start_char\", \"chunk_text\", \"metadata_json\"\n]\nreturn [{\"json\": {field: chunk.get(field) for field in fields}} for chunk in chunks]\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        980,
+        -60
+      ],
+      "id": "172c845d-0b4d-4203-ae5f-9e8f874be518",
+      "name": "Format Chunk Metadata"
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Python (Beta/Pyodide) — same predeclared scenarios and retrieval parameters.\ntests = [{'scenario': 'Normal',\n  'application_id': 'APP-2026-01026',\n  'application_date': '2026-04-01',\n  'decision_date': None,\n  'product_code': 'MNT-01',\n  'query': 'For personal loan application APP-2026-01026 submitted 2026-04-01 for product MNT-01, with '\n           'annual income $25,000, credit score 732, DTI 27.72%, and recorded Under Review rule UW-INC-001, '\n           'what underwriting minimum-income rule, decision status, and escalation procedure were applicable '\n           'on the application date? Find exact policy section 5.2, section 9 and escalation steps.',\n  'expected': 'FIN-POL-001 v3 section 5.2 and section 9; FIN-PROC-001 v2',\n  'excluded': 'FIN-POL-001 v1/v2; adverse-action circular not relevant to Under Review'},\n {'scenario': 'Context Conflict',\n  'application_id': 'APP-2026-01026',\n  'application_date': '2026-04-01',\n  'decision_date': None,\n  'product_code': 'MNT-01',\n  'query': 'As of application date 2026-04-01, for APP-2026-01026 MNT-01, income $25,000, does a policy '\n           'saying $40,000 minimum and no automatic approval require denial, or Under Review under '\n           'UW-INC-001? Compare superseded FIN-POL-001 v2 wording with authoritative v3 section 5.2 and '\n           'section 9 and FIN-PROC-001 v2; distinguish adverse-action circular from non-denial review.',\n  'expected': 'FIN-POL-001 v3 section 5.2 and section 9; FIN-PROC-001 v2',\n  'excluded': 'FIN-POL-001 v1/v2 and CFPB adverse-action circular for this Under Review decision'},\n {'scenario': 'Point-in-Time / Authority',\n  'application_id': 'APP-2024-88185',\n  'application_date': '2024-12-30',\n  'decision_date': '2025-01-02',\n  'product_code': 'MNT-01',\n  'query': 'For personal loan APP-2024-88185 MNT-01 submitted 2024-12-30 and decided 2025-01-02, DTI 38.25 '\n           'versus product maximum 36.5, which historical underwriting policy version applied on APPLICATION '\n           'DATE and what DTI rule UW1-DTI-001 mandated manual review? Retrieve FIN-POL-001 v1 section 6 and '\n           'effective-period/version rule.',\n  'expected': 'FIN-POL-001 v1 historical DTI section 6 and version-effective period',\n  'excluded': 'FIN-POL-001 v2 and v3'}]\nreturn [{\"json\": {**test, \"top_k\": 5, \"requested_candidates\": 20, \"scenario_order\": i + 1}}\n        for i, test in enumerate(tests)]\n"
+      },
+      "id": "9a84498a-6800-486a-a123-99a3c6a39626",
+      "name": "Define Retrieval Scenarios",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8766/retrieve",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ query: $json.query, top_k: 20, application_date: $json.application_date, product_code: $json.product_code }) }}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "id": "543526f0-8c4a-4654-b978-114a9b3705ab",
+      "name": "VERIFY retrieval API path - then run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1420,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Python (Beta/Pyodide) — retain all retrieved evidence unmodified.\n# Python Beta supports referencing prior nodes with _(node_name).all().\nimport json\n\ninputs = [item.json.to_py() for item in _input.all()]\ncases = [item.json.to_py() for item in _(\"Define Retrieval Scenarios\").all()]\n\n\ndef read_hits(obj):\n    if isinstance(obj, list):\n        return obj\n    for key in (\"results\", \"hits\", \"matches\", \"documents\", \"chunks\", \"retrieved\", \"data\"):\n        value = obj.get(key)\n        if isinstance(value, list):\n            return value\n        if isinstance(value, dict):\n            for nested_key in (\"results\", \"hits\", \"matches\", \"chunks\"):\n                nested = value.get(nested_key)\n                if isinstance(nested, list):\n                    return nested\n    raise ValueError(\"Unrecognized retrieval response keys: \" + str(list(obj.keys())))\n\n\ndef first_present(*values):\n    for value in values:\n        if value is not None:\n            return value\n    return None\n\n\ndef normalize(hit, index):\n    meta = hit.get(\"metadata_json\") or hit.get(\"metadata\") or {}\n    if isinstance(meta, str):\n        try:\n            meta = json.loads(meta)\n        except ValueError:\n            meta = {\"raw_metadata\": meta}\n    meta = meta if isinstance(meta, dict) else {}\n    return {\n        \"rank\": index + 1,\n        \"chunk_id\": first_present(hit.get(\"chunk_id\"), hit.get(\"id\"), meta.get(\"chunk_id\")),\n        \"doc_id\": first_present(hit.get(\"doc_id\"), meta.get(\"doc_id\")),\n        \"source_path\": first_present(hit.get(\"source_path\"), hit.get(\"source\"), meta.get(\"source_path\")),\n        \"version\": str(first_present(hit.get(\"version\"), meta.get(\"version\"), \"\")),\n        \"authority_status\": first_present(hit.get(\"authority_status\"), meta.get(\"authority_status\")),\n        \"effective_date\": first_present(hit.get(\"effective_date\"), meta.get(\"effective_date\")),\n        \"end_date\": first_present(hit.get(\"end_date\"), meta.get(\"end_date\"), meta.get(\"expiration_date\")),\n        \"section\": first_present(hit.get(\"section\"), meta.get(\"section\")),\n        \"score\": first_present(hit.get(\"score\"), hit.get(\"similarity\"), hit.get(\"distance\")),\n        \"chunk_text\": first_present(hit.get(\"chunk_text\"), hit.get(\"text\"), hit.get(\"page_content\"), hit.get(\"content\")),\n        \"metadata\": meta,\n        \"raw_hit\": hit,\n    }\n\nif len(inputs) != len(cases):\n    raise ValueError(\"Retrieval response count differs from scenario count: \"\n                     + str(len(inputs)) + \" vs \" + str(len(cases)))\n\nresults = []\nfor index, response in enumerate(inputs):\n    scenario = cases[index]\n    hits = [normalize(hit, rank) for rank, hit in enumerate(read_hits(response))]\n    k = int(scenario.get(\"top_k\", 5))\n    results.append({\"json\": {\n        \"scenario\": scenario.get(\"scenario\"),\n        \"application_id\": scenario.get(\"application_id\"),\n        \"application_date\": scenario.get(\"application_date\"),\n        \"decision_date\": scenario.get(\"decision_date\"),\n        \"product_code\": scenario.get(\"product_code\"),\n        \"query\": scenario.get(\"query\"),\n        \"expected\": scenario.get(\"expected\"),\n        \"excluded\": scenario.get(\"excluded\"),\n        \"requested_top_k\": k,\n        \"received_count\": len(hits),\n        \"raw_top_k\": hits[:k],\n        \"candidates\": hits,\n        \"raw_response\": response,\n    }})\nreturn results\n"
+      },
+      "id": "a5bb3665-b400-4f6c-b8db-cb580d86965f",
+      "name": "Preserve Top-K and Raw Evidence",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1640,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "# Python (Beta/Pyodide) — point-in-time authority gate before AI context.\n# Keep the original 20-candidate pool and 5-item final context unchanged.\nimport re\n\n\ndef numeric_version(hit):\n    raw = str(hit.get(\"version\") or \"\").strip().lower()\n    if hit.get(\"doc_id\") in (\"FIN-POL-001\", \"FIN-PROC-001\"):\n        for n in (3, 2, 1):\n            if re.search(r\"(^|\\D)\" + str(n) + r\"(\\.0)?($|\\D)\", raw):\n                return n\n    return None\n\n\ndef eligible(hit, application_date):\n    doc = str(hit.get(\"doc_id\") or \"\")\n    version = numeric_version(hit)\n    status = str(hit.get(\"authority_status\") or \"\").upper()\n    start = str(hit.get(\"effective_date\") or \"\")[:10]\n    end = str(hit.get(\"end_date\") or \"\")[:10]\n\n    if not doc or not re.fullmatch(r\"\\d{4}-\\d{2}-\\d{2}\", start):\n        return False, \"missing ID or ISO effective_date\"\n    if application_date < start:\n        return False, \"not yet effective\"\n    if end and re.fullmatch(r\"\\d{4}-\\d{2}-\\d{2}\", end) and application_date > end:\n        return False, \"expired on application date\"\n\n    if doc == \"FIN-POL-001\":\n        required = 1 if application_date < \"2026-01-01\" else 3\n        if version != required:\n            return False, \"incorrect policy version for application date\"\n        if required == 3 and status != \"CURRENT\":\n            return False, \"v3 not marked CURRENT\"\n        if required == 1 and status not in (\"SUPERSEDED\", \"CURRENT\", \"APPROVED\"):\n            return False, \"unknown historical authority\"\n        if required == 1 and not end:\n            return False, \"historical policy missing end_date\"\n        return True, \"applicable policy\"\n\n    if doc == \"FIN-PROC-001\":\n        if application_date >= \"2026-01-01\" and version != 2:\n            return False, \"not approved procedure version\"\n        if application_date < \"2026-01-01\" and version != 1:\n            return False, \"not historical procedure version\"\n        if status not in (\"CURRENT\", \"APPROVED\", \"SUPERSEDED\"):\n            return False, \"unverified procedure authority\"\n        return True, \"date-applicable procedure\"\n\n    return False, \"not selected governing policy or procedure\"\n\n\nresults = []\nfor item in _input.all():\n    x = item.json.to_py()\n    date = x[\"application_date\"]\n    allowed, rejected = [], []\n    for hit in x[\"candidates\"]:\n        ok, reason = eligible(hit, date)\n        if ok:\n            allowed.append(hit)\n        else:\n            rejected.append({\n                \"rank\": hit.get(\"rank\"), \"chunk_id\": hit.get(\"chunk_id\"),\n                \"doc_id\": hit.get(\"doc_id\"), \"reason\": reason\n            })\n    context = allowed[:x[\"requested_top_k\"]]\n    output = dict(x)\n    output.update({\n        \"architecture_change\": \"Temporal + version + authority eligibility gate prior to AI context; oversample 20 candidate hits.\",\n        \"eligible_top_k\": context,\n        \"rejected_candidates\": rejected,\n        \"missing_evidence_warning\": (\n            \"Fewer than Top-K verified eligible hits; human review required.\"\n            if len(context) < x[\"requested_top_k\"] else None\n        ),\n        \"what_reached_ai_context\": [\n            {key: hit.get(key) for key in\n             (\"chunk_id\", \"doc_id\", \"version\", \"section\", \"chunk_text\", \"source_path\")}\n            for hit in context\n        ],\n        \"manual_classification_required\": True,\n    })\n    results.append({\"json\": output})\nreturn results\n"
+      },
+      "id": "3872ab12-2bd9-418c-9781-5e4a45bef9c0",
+      "name": "Select AI Context - Authority Gate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        -60
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking Execute workflow": {
+      "main": [
+        [
+          {
+            "node": "List GitHub Documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List GitHub Documents": {
+      "main": [
+        [
+          {
+            "node": "Build Document Manifest - Python Beta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Document Manifest - Python Beta": {
+      "main": [
+        [
+          {
+            "node": "Ingest and Embed Documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ingest and Embed Documents": {
+      "main": [
+        [
+          {
+            "node": "Preview Chunk Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preview Chunk Metadata": {
+      "main": [
+        [
+          {
+            "node": "Format Chunk Metadata",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Chunk Metadata": {
+      "main": [
+        [
+          {
+            "node": "Define Retrieval Scenarios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Define Retrieval Scenarios": {
+      "main": [
+        [
+          {
+            "node": "VERIFY retrieval API path - then run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VERIFY retrieval API path - then run": {
+      "main": [
+        [
+          {
+            "node": "Preserve Top-K and Raw Evidence",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preserve Top-K and Raw Evidence": {
+      "main": [
+        [
+          {
+            "node": "Select AI Context - Authority Gate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select AI Context - Authority Gate": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b756a740-894d-4ea2-b296-c0f6b0e9fce3",
+  "meta": {
+    "instanceId": "3a393590d842d00431eb42998a95bf8d608f03b9eeed42288d78af6891973165"
+  },
+  "id": "3vrSov9dyjB8OGou",
+  "tags": []
+}
